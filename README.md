@@ -2,7 +2,10 @@
 
 `gk` is GitKraken on the command line. It brings workspaces, pull requests, issues and other GitKraken perks to the terminal for you to work with it along with your code and `git`.
 
-// Screenshot here 
+<!-- TODO: replace with a GIF or a screenshot of a cool gk feature -->
+<p align="center">
+<img src="https://user-images.githubusercontent.com/86774052/225326381-aaea81a3-9f19-4170-9e0b-2f42fac8edda.png" style="margin: 0 auto" />
+</p>
 
 GitKraken CLI is available on macOS, Windows and Unix systems.
 
@@ -15,7 +18,7 @@ Check out the [installation section below](#installation). For command usage [se
 If you have any suggestion, anything that feels off, or you miss some functionality that you would like to see here, please check out the [contributing page][contributing]. There you will find instructions for sharing your feedback to the project.
 
 <!-- this is an anchor, do not rename -->
-## 💻 Installation
+## Installation
 
 `gk` is available as a downloadable binary from the [releases page][]. Then, you only need to add it to your path in the terminal to make it globally available.
 
