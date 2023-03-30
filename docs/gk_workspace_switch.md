@@ -1,15 +1,15 @@
-## gk workspace delete
+## gk workspace switch
 
-Delete a workspace
+Switch default workspace
 
 ```
-gk workspace delete [flags]
+gk workspace switch [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for delete
+  -h, --help   help for switch
 ```
 
 ### SEE ALSO

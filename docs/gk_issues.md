@@ -1,15 +1,15 @@
-## gk user-info
+## gk issues
 
-Check the state of your GitKraken account
+Interact with issues
 
 ```
-gk user-info [flags]
+gk issues [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for user-info
+  -h, --help   help for issues
 ```
 
 ### SEE ALSO
