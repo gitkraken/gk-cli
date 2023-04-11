@@ -1,3 +1,3 @@
 # GitKraken CLI
 
-[Command Documentation](https://gitkraken.github.io/cli-docs/markdown/gk.html)
+[Command Documentation](https://gitkraken.github.io/gk-cli/docs/gk.html)
