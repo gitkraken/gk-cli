@@ -1,8 +1,7 @@
-# 🚀 GitKraken CLI
+# 🚀 GitKraken CLI `Preview`
 
-`gk` is GitKraken on the command line. It brings workspaces, pull requests, issues and other GitKraken perks to the terminal for you to work with it along with your code and `git`.
+`gk` is GitKraken on the command line. It makes working across multiple repos easier with Workspaces, provides access to pull requests and issues from multiple services (GitHub, GitLab, Bitbucket, etc.), and seamlessly connects with [GitKraken Client](https://www.gitkraken.com/git-client) and [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) in VS Code to visualize `git` information when you need it.
 
-<!-- TODO: replace with a GIF or a screenshot of a cool gk feature -->
 <p align="center">
 <img src="https://user-images.githubusercontent.com/86774052/225326381-aaea81a3-9f19-4170-9e0b-2f42fac8edda.png" style="margin: 0 auto" />
 </p>
@@ -11,9 +10,8 @@ GitKraken CLI is available on macOS, Windows and Unix systems.
 
 ## 📚 Documentation
 
-Check out the [installation section below](#installation). For command usage [see the docs][documentation].
+Check out the [installation instructions](#installation) and [examples](#examples) below. For command usage [see the docs][documentation].
 
-<!-- this is an anchor, do not rename -->
 ## Installation
 
 `gk` is available as a downloadable binary from the [releases page][].
@@ -38,7 +36,7 @@ Place the `gk` binary in a desired folder. Then edit your environment variables 
 5. Add the path to the `gk` binary at the end.
 
 ## Examples
-#### Create Workspaces to group repos
+### 🤝 Create Workspaces to group repos
 ```
 gk ws create
 ```
@@ -50,7 +48,32 @@ Cloud Workspaces are accessible on any machine, and can be connected to hosting 
 
 <img width="486" alt="gk-ws-create-demo" src="https://user-images.githubusercontent.com/3358707/231017646-6401a751-b3ac-486d-8520-55c006843c9d.png">
 
-#### Get pull requests and issues
+#### Adding and locating repos
+```
+gk ws add-repo
+```
+This will add a new repo to a workspace either by path or remote URL.
+```
+gk ws locate
+```
+If you're accessing a Cloud Workspace for the first time, you might need to `locate` the local repos on your machine. Run this command in the directory where youre repos are located so `gk` knows where they are.
+```
+gk ws clone
+```
+You can also `clone` all repos in a Workspace at once into a single directory. This is helpful for onboarding when your team works on multiple repos.
+
+### 🎬 Perform `git` actions on multiple repos at once
+```
+gk ws [action]
+```
+In any workspace, you can perform `git` operations like `fetch`, `pull`, `push`, and `checkout` across all repos in the workspace.
+
+### 📋 Get pull requests and issues
+```
+gk provider add
+```
+Before fetching pull requests and issues, ensure that you have the appropriate provider (GitHub, GitLab, etc.) connected. This will open a browser to authenticate.
+
 ```
 gk pr list
 ```
@@ -58,8 +81,15 @@ When a Cloud Workspace has a provider connected, you can list all pull requests 
 
 <img width="612" alt="gk-pr-list-demo" src="https://user-images.githubusercontent.com/3358707/231019508-8923bb6e-7e33-4be1-8427-915ab97bca21.png">
 
+```
+gk pr view
+```
+Returns a list of all pull requests for all repos in a workspace. Type to search for a specific pull request and press `enter` to view details.
 
-#### 📈 Pull Request Insights
+<img width="540" alt="gk-pr-view-demo" src="https://user-images.githubusercontent.com/3358707/231217076-0e01e129-454d-4d56-aeb0-5fb07d1686de.png">
+
+
+### 📈 Pull Request Insights
 ```
 gk ws insights
 ```
@@ -73,7 +103,7 @@ See the following metrics for all repositories in a Cloud Workspace. The default
 
 <img width="323" alt="gk-ws-insights-demo" src="https://user-images.githubusercontent.com/3358707/231011050-77518483-874e-48c7-8de6-0834eb0cc312.png">
 
-#### ✨ Visual Commit Graph
+### ✨ Visual Commit Graph
 ```
 gk ws graph
 ```
