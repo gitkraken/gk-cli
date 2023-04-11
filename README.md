@@ -23,7 +23,7 @@ Check out the [installation section below](#installation). For command usage [se
 Add it to your binaries folder:
 
 ```bash
-mv ~/Downloads/gk ~/usr/local/bin/gk
+mv ~/Downloads/gk /usr/local/bin/gk
 ``` 
 
 ### Windows
