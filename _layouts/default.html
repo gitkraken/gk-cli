@@ -1,0 +1,123 @@
+{% assign valid_pages = site.pages | where_exp:"page", "page.dir == '/docs/'" %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>GitKraken CLI | Release the Kraken in the command line!</title>
+    <link rel="icon" href="/gk-cli/assets/icon.webp" sizes="32x32"/>
+    <link rel="icon" href="/gk-cli/assets/icon.webp" sizes="192x192"/>
+    <link rel="stylesheet" href="/gk-cli/assets/css/style.css" />
+    <link rel="stylesheet" href="/gk-cli/assets/css/custom.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <img src="/gk-cli/assets/logo.png"/> <h1>GitKraken CLI</h1>
+      </div>
+      <ul>
+        <li><a href="https://github.com/gitkraken/gk-cli">Repository</a></li>
+        <li><a href="https://github.com/gitkraken/gk-cli/releases">Releases</a></li>
+      </ul>
+    </header>
+    <section id="main-page">
+        <nav id="navigation"></nav>
+        <div id="page-content">
+          <div class="content">
+            {{ content | markdownify }}
+          </div>
+        </div>
+    </section>
+    <footer>
+      <div class="container-xl px-3 px-md-4">
+        <div class="d-flex flex-wrap py-5 mb-5">
+          <div class="col-12 col-lg-3 mb-5">
+            <img src="/gk-cli/assets/gitkraken-keif-mono-teal-sq.svg"/>
+          </div>
+          <div class="col-6 col-sm-4 col-lg-3 mb-6 mb-md-3 pr-3 pr-lg-0 pl-lg-4">
+            <h4 class="mb-3 text-mono text-white-light text-normal">Products</h4>
+            <ul class="list-style-none text-white f5">
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/pricing">Pricing</a></li>
+              <li class="lh-condensed mb-3"><a href="https://help.gitkraken.com/">Help center</a></li>
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/git-client">GitKraken Client</a></li>
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/gitlens">GitLens</a></li>
+              <li class="lh-condensed mb-3"><a href="https://github.com/gitkraken/gk-cli">GitKraken CLI</a></li>
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/git-integration-for-jira">Git integration for Jira</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-sm-4 col-lg-3 mb-6 mb-md-3 pr-3 pr-md-0 pl-md-4">
+            <h4 class="mb-3 text-mono text-white-light text-normal">Community</h4>
+            <ul class="list-style-none f5">
+              <li class="lh-condensed mb-3"><a class="link-white" href="https://www.gitkraken.com/learn/git">Learn Git Library</a></li>
+              <li class="lh-condensed mb-3"><a class="link-white" href="https://www.gitkraken.com/pdfs/git-basics-cheat-sheet">Git Commands Cheat Sheet</a></li>
+              <li class="lh-condensed mb-3"><a class="link-white" href="https://www.gitkraken.com/blog">Git Blog</a></li>
+              <li class="lh-condensed mb-3"><a class="link-white" href="https://www.gitkraken.com/gitkon/2022-conference">Git Conference</a></li>
+              <li class="lh-condensed mb-3"><a class="link-white" href="https://www.gitkraken.com/ambassador">Ambassador Program</a></li>
+              <li class="lh-condensed mb-3"><a class="link-white" href="https://www.gitkraken.com/newsletter">Newsletter</a></li>
+              <li class="lh-condensed mb-3"><a class="link-white" href="https://slack.gitkraken.com/" target="_blank" rel="noopener">Slack Community</a></li>
+              <li class="lh-condensed mb-3"><a class="link-white" href="https://www.gitkraken.com/student-resources">GitKraken for Students</a></li>
+              <li class="lh-condensed mb-3"><a class="link-white" href="https://www.gitkraken.com/github-campus-program">GitKraken for Schools</a></li>
+              <li class="lh-condensed mb-3"><a class="link-white" href="https://www.gitkraken.com/store">Store</a></li>
+              <li class="lh-condensed mb-3"><a class="link-white" href="https://www.gitkraken.com/keif-gallery">Keif Gallery</a></li>
+              <li class="lh-condensed mb-3"><a class="link-white" href="https://www.gitkraken.com/referrals">Referral Program</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-sm-4 col-lg-3 mb-6 mb-md-3 pr-3 pr-sm-0 pr-md-0 pl-md-4">
+            <h4 class="mb-3 text-mono text-white-light text-normal">Company</h4>
+            <ul class="list-style-none f5">
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/contact">Contact Us</a></li>
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/about">About Us</a></li>
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/careers">Careers</a></li>
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/sample-customers">Customers</a></li>
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/media">Media</a></li>
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/media/news">News</a></li>
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/media/awards">Awards</a></li>
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/media/events">Events</a></li>
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/media/press">Press Releases</a></li>
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/media/press-releases#logos">Logos</a></li>
+              <li class="lh-condensed mb-3"><a href="https://www.gitkraken.com/privacy">Privacy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <div class="bg-gray-dark">
+      <div class="container-xl px-3 px-md-4 f6 py-4 d-sm-flex flex-justify-between flex-row-reverse flex-items-center">
+        <ul class="list-style-none d-flex flex-items-center mb-3 mb-sm-0 lh-condensed-ultra">
+          <li class="mr-3">
+            <a href="https://twitter.com/gitkraken" title="GitKraken on Twitter" style="color: #959da5;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 273.5 222.3" class="d-block" height="18"><path d="M273.5 26.3a109.77 109.77 0 0 1-32.2 8.8 56.07 56.07 0 0 0 24.7-31 113.39 113.39 0 0 1-35.7 13.6 56.1 56.1 0 0 0-97 38.4 54 54 0 0 0 1.5 12.8A159.68 159.68 0 0 1 19.1 10.3a56.12 56.12 0 0 0 17.4 74.9 56.06 56.06 0 0 1-25.4-7v.7a56.11 56.11 0 0 0 45 55 55.65 55.65 0 0 1-14.8 2 62.39 62.39 0 0 1-10.6-1 56.24 56.24 0 0 0 52.4 39 112.87 112.87 0 0 1-69.7 24 119 119 0 0 1-13.4-.8 158.83 158.83 0 0 0 86 25.2c103.2 0 159.6-85.5 159.6-159.6 0-2.4-.1-4.9-.2-7.3a114.25 114.25 0 0 0 28.1-29.1" fill="currentColor"></path></svg>
+            </a>
+          </li>
+          <li class="mr-3">
+            <a href="https://facebook.com/gitkraken" title="GitKraken on Facebook" style="color: #959da5;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.3 15.4" class="d-block" height="18"><path d="M14.5 0H.8a.88.88 0 0 0-.8.9v13.6a.88.88 0 0 0 .8.9h7.3v-6h-2V7.1h2V5.4a2.87 2.87 0 0 1 2.5-3.1h.5a10.87 10.87 0 0 1 1.8.1v2.1h-1.3c-1 0-1.1.5-1.1 1.1v1.5h2.3l-.3 2.3h-2v5.9h3.9a.88.88 0 0 0 .9-.8V.8a.86.86 0 0 0-.8-.8z" fill="currentColor"></path></svg>
+            </a>
+          </li>
+          <li class="mr-3">
+            <a href="https://www.youtube.com/gitkraken" title="GitKraken on YouTube" style="color: #959da5;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.17 13.6" class="d-block" height="16"><path d="M18.77 2.13A2.4 2.4 0 0 0 17.09.42C15.59 0 9.58 0 9.58 0a57.55 57.55 0 0 0-7.5.4A2.49 2.49 0 0 0 .39 2.13 26.27 26.27 0 0 0 0 6.8a26.15 26.15 0 0 0 .39 4.67 2.43 2.43 0 0 0 1.69 1.71c1.52.42 7.5.42 7.5.42a57.69 57.69 0 0 0 7.51-.4 2.4 2.4 0 0 0 1.68-1.71 25.63 25.63 0 0 0 .4-4.67 24 24 0 0 0-.4-4.69zM7.67 9.71V3.89l5 2.91z" fill="currentColor"></path></svg>
+            </a>
+          </li>
+          <li class="mr-3 flex-self-start">
+            <a href="https://www.linkedin.com/company/gitkraken" title="GitKraken on Linkedin" style="color: #959da5;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 18" class="d-block" height="18"><path d="M3.94 2A2 2 0 1 1 2 0a2 2 0 0 1 1.94 2zM4 5.48H0V18h4zm6.32 0H6.34V18h3.94v-6.57c0-3.66 4.77-4 4.77 0V18H19v-7.93c0-6.17-7.06-5.94-8.72-2.91z" fill="currentColor"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://slack.gitkraken.com/" title="GitKraken's Slack" style="color: #959da5;">
+              <svg height="20" fill="#959da5" viewBox="70 50 150 150"><g><g><path d="M99.4,151.2c0,7.1-5.8,12.9-12.9,12.9s-12.9-5.8-12.9-12.9c0-7.1,5.8-12.9,12.9-12.9h12.9V151.2z"/><path d="M105.9,151.2c0-7.1,5.8-12.9,12.9-12.9s12.9,5.8,12.9,12.9v32.3c0,7.1-5.8,12.9-12.9,12.9s-12.9-5.8-12.9-12.9C105.9,183.5,105.9,151.2,105.9,151.2z"/></g><g><path d="M118.8,99.4c-7.1,0-12.9-5.8-12.9-12.9s5.8-12.9,12.9-12.9s12.9,5.8,12.9,12.9v12.9H118.8z"/><path d="M118.8,105.9c7.1,0,12.9,5.8,12.9,12.9s-5.8,12.9-12.9,12.9H86.5c-7.1,0-12.9-5.8-12.9-12.9s5.8-12.9,12.9-12.9C86.5,105.9,118.8,105.9,118.8,105.9z"/></g><g><path d="M170.6,118.8c0-7.1,5.8-12.9,12.9-12.9c7.1,0,12.9,5.8,12.9,12.9s-5.8,12.9-12.9,12.9h-12.9V118.8z"/><path d="M164.1,118.8c0,7.1-5.8,12.9-12.9,12.9c-7.1,0-12.9-5.8-12.9-12.9V86.5c0-7.1,5.8-12.9,12.9-12.9c7.1,0,12.9,5.8,12.9,12.9V118.8z"/></g><g><path d="M151.2,170.6c7.1,0,12.9,5.8,12.9,12.9c0,7.1-5.8,12.9-12.9,12.9c-7.1,0-12.9-5.8-12.9-12.9v-12.9H151.2z"/><path d="M151.2,164.1c-7.1,0-12.9-5.8-12.9-12.9c0-7.1,5.8-12.9,12.9-12.9h32.3c7.1,0,12.9,5.8,12.9,12.9c0,7.1-5.8,12.9-12.9,12.9H151.2z"/></g></g></svg>
+            </a>
+          </li>
+        </ul>
+        <p class="text-gray m-0">© <span id="year">2023</span> Axosoft, LLC DBA GitKraken</p>
+      </div>
+    </div>
+    <script>
+      document.querySelector("#year").innerHTML = (new Date()).getFullYear();
+      const pages = [];
+      {% for item in valid_pages %}
+        pages.push({"name": "{{ item.title }}","url": "{{ item.url }}","active": {% if item.url == page.url %}true{% else %}false{% endif %}}){% endfor %}
+    </script>
+    <script type="text/javascript" src="/gk-cli/assets/js/script.js"></script>
+  </body>
+</html>
