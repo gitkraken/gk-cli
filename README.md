@@ -14,11 +14,23 @@ Check out the [installation instructions](#installation) and [examples](#example
 
 ## Installation
 
-`gk` is available as a downloadable binary from the [releases page][].
+### macOS 
+`gk` is available from [Homebrew][brew] with the following command:
 
-### macOS and Unix
+```bash
+brew install gitkraken-cli
+```
 
-Add it to your binaries folder:
+Or download it from the [releases page][] and add it to your binaries folder:
+
+```bash
+mv ~/Downloads/gk /usr/local/bin/gk
+``` 
+
+### Unix
+
+
+`gk` is available as a downloadable binary from the [releases page][] and add it to your binaries folder:
 
 ```bash
 mv ~/Downloads/gk /usr/local/bin/gk
@@ -116,3 +128,4 @@ https://user-images.githubusercontent.com/3358707/231006608-18f3dca2-a67c-4e77-b
 
 [documentation]: https://gitkraken.github.io/gk-cli/
 [releases page]: https://github.com/gitkraken/gk-cli/releases/latest
+[brew]: https://brew.sh/
