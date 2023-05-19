@@ -37,8 +37,14 @@ mv ~/Downloads/gk /usr/local/bin/gk
 ``` 
 
 ### Windows
+`gk` is available from [Winget][winget] with the following command:
 
-Place the `gk` binary in a desired folder. Then edit your environment variables to add it to your PATH.
+```bash
+winget install gitkraken.cli
+```
+
+Or download it from the [releases page][] and place the `gk.exe` in a desired folder.
+Then edit your environment variables to add it to your PATH.
 
 1. In Search, search for **Environment Variables**.
 2. Click on the **Edit the system environment variables** result.
@@ -129,3 +135,4 @@ https://user-images.githubusercontent.com/3358707/231006608-18f3dca2-a67c-4e77-b
 [documentation]: https://gitkraken.github.io/gk-cli/
 [releases page]: https://github.com/gitkraken/gk-cli/releases/latest
 [brew]: https://brew.sh/
+[winget]: https://github.com/microsoft/winget-cli
