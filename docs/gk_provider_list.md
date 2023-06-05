@@ -1,15 +1,15 @@
-## gk provider add
+## gk provider list
 
-Connect a repo hosting or issue provider
+List of connected/not connected providers
 
 ```
-gk provider add [flags]
+gk provider list [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for add
+  -h, --help   help for list
 ```
 
 ### SEE ALSO
