@@ -1,0 +1,52 @@
+name: Bug report
+description: Create a report to help the GitKraken CLI improve
+title: "[BUG]"
+body:
+    - type: textarea
+      attributes:
+          label: Description
+          description: Please provide a concise description of what you're experiencing, what you expected to happen, and any steps to reproduce the behavior.
+          placeholder: |
+              1. In this environment...
+              2. With this config...
+              3. Run '...'
+              4. See error...
+      validations:
+          required: true
+    - type: input
+      id: cliversion
+      attributes:
+          label: GitKraken CLI Version
+          description: What version of GitKraken CLI are you using?
+          placeholder: 1.0.6
+      validations:
+          required: true
+    - type: textarea
+      id: osversion
+      attributes:
+          label: OS Version
+          description: What version of your Operating System are you using?
+          placeholder: |
+                For Windows users:
+                - Operating System or distribution: Windows 10, macOS Big Sur, Ubuntu 21.04, Fedora 34...
+                - Version:
+                - Architecture: ARM, Intel
+      validations:
+          required: false
+    - type: input
+      id: git
+      attributes:
+          label: Git Version
+          description: 'What version of Git are you using? Use `git --version`'
+          placeholder: 'git version 2.37.0.windows.1'
+      validations:
+          required: false
+    - type: textarea
+      attributes:
+          label: Logs, Screenshots, Screen Captures, etc
+          description: |
+              Logs? Links? References? Anything that will give us more context about the issue you are encountering!
+          placeholder: |
+              Describe your problem here with anything that can help us identify and solve the issue.
+      validations:
+          required: false
