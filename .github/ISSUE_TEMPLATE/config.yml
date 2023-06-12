@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+    - name: Documentation
+      url: https://gitkraken.github.io/gk-cli/docs/gk.html
+      about: Read the GitKraken CLI support documentation

@@ -1,9 +1,7 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+about: Suggest an idea for GitKraken CLI
+title: "[FEAT]"
 
 ---
 
