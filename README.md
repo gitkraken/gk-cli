@@ -26,16 +26,24 @@ Or download it from the [releases page][] and add it to your binaries folder:
 ```bash
 mv ~/Downloads/gk /usr/local/bin/gk
 ``` 
-
+______
 ### Unix
-
-
-`gk` is available as a downloadable binary from the [releases page][] and add it to your binaries folder:
+`gk` is available as a downloadable binary from the [releases page][]. Once you have it, add it to your binaries folder:
 
 ```bash
 mv ~/Downloads/gk /usr/local/bin/gk
 ``` 
 
+You can also [download][releases page] your corresponding package (`.dev`, `.rpm`) and install it with:
+
+```bash
+sudo apt install ./gk.deb
+```
+or 
+```bash
+sudo rpm -i ./gk.rpm
+```
+_____
 ### Windows
 `gk` is available from [Winget][winget] with the following command:
 
@@ -43,7 +51,13 @@ mv ~/Downloads/gk /usr/local/bin/gk
 winget install gitkraken.cli
 ```
 
-Or download it from the [releases page][] and place the `gk.exe` in a desired folder.
+You can also download it using [Chocolately][chocolately]:
+
+```bash
+choco install gkcli --version=1.0.7
+```
+
+Or download the binary from the [releases page][] and place the `gk.exe` in a desired folder.
 Then edit your environment variables to add it to your PATH.
 
 1. In Search, search for **Environment Variables**.
@@ -136,3 +150,4 @@ https://user-images.githubusercontent.com/3358707/231006608-18f3dca2-a67c-4e77-b
 [releases page]: https://github.com/gitkraken/gk-cli/releases/latest
 [brew]: https://brew.sh/
 [winget]: https://github.com/microsoft/winget-cli
+[chocolately]: https://community.chocolatey.org/packages/GKCLI
