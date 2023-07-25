@@ -15,10 +15,16 @@ Check out the [installation instructions](#installation) and [examples](#example
 ## Installation
 
 ### macOS 
-`gk` is available from [Homebrew][brew] with the following command:
+`gk` is available from [Homebrew][brew] and [MacPorts][macports] with the following command:
 
+Homebrew:
 ```bash
 brew install gitkraken-cli
+```
+
+MacPorts:
+```bash
+sudo port install gk
 ```
 
 Or download it from the [releases page][] and add it to your binaries folder:
@@ -149,5 +155,6 @@ https://user-images.githubusercontent.com/3358707/231006608-18f3dca2-a67c-4e77-b
 [documentation]: https://gitkraken.github.io/gk-cli/
 [releases page]: https://github.com/gitkraken/gk-cli/releases/latest
 [brew]: https://brew.sh/
+[macports]: https://www.macports.org/
 [winget]: https://github.com/microsoft/winget-cli
 [chocolately]: https://community.chocolatey.org/packages/GKCLI
