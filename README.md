@@ -60,7 +60,7 @@ winget install gitkraken.cli
 You can also download it using [Chocolately][chocolately]:
 
 ```bash
-choco install gkcli --version=1.0.7
+choco install gkcli
 ```
 
 Or download the binary from the [releases page][] and place the `gk.exe` in a desired folder.
