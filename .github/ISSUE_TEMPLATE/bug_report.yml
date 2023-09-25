@@ -43,7 +43,7 @@ body:
           required: false
     - type: textarea
       attributes:
-          label: Logs, Screenshots, Screen Captures, etc
+          label: Logs, Screenshots, Screen Captures, URLs, etc
           description: |
               Logs? Links? References? Anything that will give us more context about the issue you are encountering!
           placeholder: |

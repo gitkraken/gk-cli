@@ -40,6 +40,13 @@ ______
 mv ~/Downloads/gk /usr/local/bin/gk
 ``` 
 
+Or create a new directory, move the binary and add it to $PATH:
+```bash
+mkdir "$HOME/cli"
+mv ~/Downloads/gk "$HOME/cli"
+export PATH="$HOME/gk:$PATH"
+``` 
+
 You can also [download][releases page] your corresponding package (`.dev`, `.rpm`) and install it with:
 
 ```bash
@@ -72,6 +79,16 @@ Then edit your environment variables to add it to your PATH.
 4. In the **System Variables** section, scroll until you find the **PATH** variable. Click on it.
     - If it doesn't exist, create a variable with the name **PATH**. 
 5. Add the path to the `gk` binary at the end.
+
+## Troubleshooting
+
+### ```gk login``` freezes after authenticating in browser
+This problem is due to the browser. Currently we know that Safari and Brave do not allow to respond to localhost through port 1314. To fix this, change your default browser or copy the URL before the redirect and open it in another browser.
+
+### gk from Oh-My-Zsh
+Oh-My-Zsh has ```gitk``` aliased as ```gk``` and that can create some problems. To fix this, type in your terminal:
+
+```unalias gk```
 
 ## Examples
 ### 🤝 Create Workspaces to group repos
