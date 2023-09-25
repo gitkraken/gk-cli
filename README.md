@@ -88,7 +88,9 @@ This problem is due to the browser. Currently we know that Safari and Brave do n
 ### gk from Oh-My-Zsh
 Oh-My-Zsh has ```gitk``` aliased as ```gk``` and that can create some problems. To fix this, type in your terminal:
 
-```unalias gk```
+```
+unalias gk
+```
 
 ## Examples
 ### 🤝 Create Workspaces to group repos
