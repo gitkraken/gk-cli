@@ -1,15 +1,15 @@
-## gk provider list
+## gk provider remove
 
-List of connected/not connected providers
+Remove provider token
 
 ```
-gk provider list [flags]
+gk provider remove [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for list
+  -h, --help   help for remove
 ```
 
 ### SEE ALSO
