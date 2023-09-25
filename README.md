@@ -33,7 +33,7 @@ Or download it from the [releases page][] and add it to your binaries folder:
 mv ~/Downloads/gk /usr/local/bin/gk
 ``` 
 ______
-### Unix
+### Unix / Ubuntu
 `gk` is available as a downloadable binary from the [releases page][]. Once you have it, add it to your binaries folder:
 
 ```bash
@@ -49,6 +49,8 @@ or
 ```bash
 sudo rpm -i ./gk.rpm
 ```
+
+> Note: if you have an error "command not found: gitk" when executing a `gk` command, excute `unalias gk` and try again.
 _____
 ### Windows
 `gk` is available from [Winget][winget] with the following command:
