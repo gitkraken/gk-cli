@@ -64,7 +64,7 @@ _____
 winget install gitkraken.cli
 ```
 
-You can also download it using [Chocolately][chocolately]:
+You can also download it using [Chocolatey][chocolatey]:
 
 ```bash
 choco install gkcli
@@ -176,4 +176,4 @@ https://user-images.githubusercontent.com/3358707/231006608-18f3dca2-a67c-4e77-b
 [brew]: https://brew.sh/
 [macports]: https://www.macports.org/
 [winget]: https://github.com/microsoft/winget-cli
-[chocolately]: https://community.chocolatey.org/packages/GKCLI
+[chocolatey]: https://community.chocolatey.org/packages/GKCLI
