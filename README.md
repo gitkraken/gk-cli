@@ -4,7 +4,7 @@
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/86774052/225326381-aaea81a3-9f19-4170-9e0b-2f42fac8edda.png" style="margin: 0 auto" />
-</p>
+</p> 
 
 GitKraken CLI is available on macOS, Windows and Unix systems.
 
