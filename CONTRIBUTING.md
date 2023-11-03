@@ -1,4 +1,4 @@
-## Contributing
+## Contributing 
 
 Hello! Thank you for your interest in the GitKraken CLI. We love feedback from our users!
 
