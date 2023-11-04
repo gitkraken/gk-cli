@@ -3,7 +3,7 @@ description: Create a report to help the GitKraken CLI improve
 title: "[BUG]"
 body:
     - type: textarea
-      attributes:
+      attributes: 
           label: Description
           description: Please provide a concise description of what you're experiencing, what you expected to happen, and any steps to reproduce the behavior.
           placeholder: |
