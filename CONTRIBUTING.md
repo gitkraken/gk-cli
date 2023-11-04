@@ -1,5 +1,5 @@
 ## Contributing 
-
+ 
 Hello! Thank you for your interest in the GitKraken CLI. We love feedback from our users!
 
 We accept feedback for bug fixes and features. We'd also love to hear about ideas for new features.
