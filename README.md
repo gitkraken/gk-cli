@@ -47,7 +47,7 @@ mv ~/Downloads/gk "$HOME/cli"
 export PATH="$HOME/gk:$PATH"
 ``` 
 
-You can also [download][releases page] your corresponding package (`.dev`, `.rpm`) and install it with:
+You can also [download][releases page] your corresponding package (`.deb`, `.rpm`) and install it with:
 
 ```bash
 sudo apt install ./gk.deb
