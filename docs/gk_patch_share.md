@@ -1,15 +1,15 @@
-## gk patch view
+## gk patch share
 
-Preview changes of a Cloud Patch
+Change the sharing preferences of a patch. Share or remove access to other developers
 
 ```
-gk patch view [flags]
+gk patch share [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for view
+  -h, --help   help for share
 ```
 
 ### SEE ALSO
