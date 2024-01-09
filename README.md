@@ -98,6 +98,19 @@ unalias gk
 ```
 
 ## Examples
+### 🎯 Focus View
+```
+gk focus
+```
+GitKraken Focus View is a unified dashboard that consolidates PRs, Issues, and WIPs across all of the repositories in a [Cloud Workspace](#-create-workspaces-to-group-repos). You can view the details of any item and take action on your most important tasks.
+
+<img width="900" alt="Screenshot 2024-01-02 at 10 09 03 AM" src="https://github.com/gitkraken/gk-cli/assets/115040794/42f686de-cd8c-49a5-b0cf-43062c6b4509">
+
+#### Pin items to keep them at the top of your list
+Use the shortcut <kbd>p</kbd> to pin any PR or Issue to the top of the list. You can unpin an item by using the same shortcut on any pinned item.
+#### Snooze items to save them for later
+Use the shortcut <kbd>s</kbd> to snooze any PR or Issue, removing them from the list of items. You can view snoozed items by navigating to the `Snoozed` tab in the Focus View. You can unsnooze items and bring them back into your Focus View lists by using the same shortcut on any snoozed item.
+
 ### 🤝 Create Workspaces to group repos
 ```
 gk ws create
