@@ -1,15 +1,15 @@
-## gk login
+## gk feedback
 
-Log in to your GitKraken account
+Leave us a comment, report a bug or suggest a new feature
 
 ```
-gk login [flags]
+gk feedback [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for login
+  -h, --help   help for feedback
 ```
 
 ### SEE ALSO

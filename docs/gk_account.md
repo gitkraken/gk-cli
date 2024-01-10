@@ -1,15 +1,15 @@
-## gk login
+## gk account
 
-Log in to your GitKraken account
+Manage your account and your organizations through your browser
 
 ```
-gk login [flags]
+gk account [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for login
+  -h, --help   help for account
 ```
 
 ### SEE ALSO
