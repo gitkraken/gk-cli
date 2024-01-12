@@ -27,7 +27,6 @@ body:
           label: OS Version
           description: What version of your Operating System are you using?
           placeholder: |
-                For Windows users:
                 - Operating System or distribution: Windows 10, macOS Big Sur, Ubuntu 21.04, Fedora 34...
                 - Version:
                 - Architecture: ARM, Intel
