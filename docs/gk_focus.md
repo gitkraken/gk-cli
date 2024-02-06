@@ -10,7 +10,7 @@ gk focus [flags]
 
 ```
   -h, --help        help for focus
-  -s, --select-ws   Skip the default workspace for this action and force a workspace selection
+  -w, --ws string   Set the name of the workspace you want to view.
 ```
 
 ### SEE ALSO
