@@ -1,3 +1,4 @@
+![Uploading 1000026383.jpg…]()
 ## Contributing
 
 Hello! Thank you for your interest in the GitKraken CLI. We love feedback from our users!
