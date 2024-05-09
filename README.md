@@ -113,9 +113,9 @@ Cloud Patches are enabled in the GitKraken CLI by default.
 
 To work with Cloud Patches, use `gk patch [command]`. You can run `gk patch` to see all options offered and what they do.
 
-![gk-cli-gk-patch.png](/.github/gk-cli-gk-patch.png)
+![gk-cli-gk-patch.png](/.github/images/gk-cli-gk-patch.png)
 
-To create a Cloud Patch, run `gk patch create`. You will be prompted to provide information about the patch and what it should be created from. †You have the following sharing options:
+To create a Cloud Patch, run `gk patch create`. You will be prompted to provide information about the patch and what it should be created from. You have the following sharing options:
 
 - `Public`: Anyone that you share the public link with will be able to work with the Cloud Patch.
 
@@ -125,11 +125,11 @@ To create a Cloud Patch, run `gk patch create`. You will be prompted to provide 
 
 Once the process is completed, you will be provided with a link that can be used by yourself or others to open the cloud patch in GitKraken Desktop or GitLens. From there, the patch can be applied in either to work with those changes. To apply a Cloud Patch at a later time to the current repository, you can run `gk patch apply`.
 
-![gk-cli-gk-patch.png](/.github/gk-cli-patch-create-example.gif)
+![gk-cli-gk-patch.png](/.github/images/gk-cli-patch-create-example.gif)
 
 Cloud Patches can be viewed from URLs shared to you and they can be applied to your working tree or to a new or existing branch. Simply select or open the link and then follow the prompts within GitLens or GitKraken Desktop to apply the Cloud Patch.
 
-![gkc-apply-cloud-patch-example.gif](/.github/gkc-apply-cloud-patch-example.gif)
+![gkc-apply-cloud-patch-example.gif](/.github/images/gkc-apply-cloud-patch-example.gif)
 
 Here are some other helpful commands to be used with Cloud Patches:
 
@@ -147,27 +147,25 @@ If you do not want your Cloud Patch data stored on GitKraken Servers, we offer t
 
 GitKraken Code Suggest simplifies code review by allowing you to make suggestions and edits across the entire project, not just on the lines that were changed, within GitLens, GitKraken Desktop, and gitkraken.dev. When a Pull Request is open, you can make suggestions to the pull request that others can then review and accept to include in the pull request. 
 
-![cli-code-suggest.png](/.github/cli-code-suggest.png)
+![cli-code-suggest.png](/.github/images/cli-code-suggest.png)
 
 To start, navigate (`cd`) to a repository with an open pull request. Then, check out the branch with the open pull request (`git checkout branch-name`). Next, begin making the desired changes locally that you would like to include as suggestions. The [Launchpad](#-launchpad) can quickly help you see open pull requests, check out branches, and begin working. 
 
 Once you are ready to suggest the changes, run `gk pr suggest`, 
 
-<!--->
-gif of process
---->
+![cli-code-suggest.png](/.github/images/cli-create-code-suggestion.gif)
 
 This will include a comment on the pull request with two options: you can select _Code Suggestion for #PR_ to open the suggestion in gitkraken.dev or select _locally on your machine_ to open the suggestion in GitKraken or GitLens.
 
-![gl-code-suggest-comment.png](/.github/gl-code-suggest-comment.png)
+![gl-code-suggest-comment.png](/.github/images/gl-code-suggest-comment.png)
 
 When selecting the _Code Suggestion for #PR_ you will be taken to gitkraken.dev to review and accept the changes. Here, you can review the changes by selecting each file and once you are ready, you can select _Commit Suggestions_. This will create a new commit on the remote for the existing branch (shown under _COMMIT SUGGESTIONS TO_). 
 
-![gl-accept-code-suggestion.gif](/.github/gl-accept-code-suggestion.gif)
+![gl-accept-code-suggestion.gif](/.github/images/gl-accept-code-suggestion.gif)
 
 When selecting _locally on your machine_ you can open them on GitLens or GitKraken Desktop. Here, you can review the changes by selecting each file and once you are ready, you can select _Apply_ to apply to the branch you currently have checked out or select the dropdown and then _Apply to a Branch_ to apply to a new branch or select an existing branch. This will apply the patch locally. 
 
-![gl-accept-code-suggestion-from-gl.gif](/.github/gl-accept-code-suggestion-from-gl.gif)
+![gl-accept-code-suggestion-from-gl.gif](/.github/images/gl-accept-code-suggestion-from-gl.gif)
 
 ## Examples
 
