@@ -163,7 +163,7 @@ When selecting the _Code Suggestion for #PR_ you will be taken to gitkraken.dev 
 
 ![gl-accept-code-suggestion.gif](/.github/images/gl-accept-code-suggestion.gif)
 
-When selecting _locally on your machine_ you can open them on GitLens or GitKraken Desktop. Here, you can review the changes by selecting each file and once you are ready, you can select _Apply_ to apply to the branch you currently have checked out or select the dropdown and then _Apply to a Branch_ to apply to a new branch or select an existing branch. This will apply the patch locally. 
+When selecting _locally on your machine_ you can open them on [GitKraken Desktop](/gitkraken-client/pull-requests/#review-code-and-suggest-changes) or [GitLens](gitlens/gitlens-features/#code-suggest-preview). Here, you can review the changes by selecting each file and once you are ready, you can select _Apply_ to apply to the branch you currently have checked out or select the dropdown and then _Apply to a Branch_ to apply to a new branch or select an existing branch. This will apply the patch locally. 
 
 ![gl-accept-code-suggestion-from-gl.gif](/.github/images/gl-accept-code-suggestion-from-gl.gif)
 
