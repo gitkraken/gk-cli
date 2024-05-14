@@ -253,7 +253,7 @@ See the following metrics for all repositories in a Cloud Workspace. The default
 
 ### ✨ Visual Commit Graph
 ```
-gk ws graph
+gk graph
 ```
 Open a visual graph of the repo in your current directory in either [GitKraken Desktop](https://www.gitkraken.com/git-client) or [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) in VS Code.
 
