@@ -177,7 +177,7 @@ gk launchpad
 
 GitKraken Launchpad is a unified dashboard that consolidates PRs, Issues, and WIPs across all of the repositories in a [Cloud Workspace](/cli/cli-home/#create-workspaces-to-group-repos). You can view the details of any item and take action on your most important tasks.
 
-<img src="/wp-content/uploads/cli-launchpad.png" class="img-responsive center img-bordered">
+![cli-launchpad.png](/.github/images/cli-launchpad.png)
 
 #### Pin items to keep them at the top of your list
 Use the shortcut <kbd>p</kbd> to pin any PR or Issue to the top of the list. You can unpin an item by using the same shortcut on any pinned item.
