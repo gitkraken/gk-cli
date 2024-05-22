@@ -14,7 +14,7 @@ Check out the [installation instructions](#installation) and [examples](#example
 
 ## Installation
 
-### macOS 
+### macOS
 `gk` is available from [Homebrew][brew] and [MacPorts][macports] with the following command:
 
 Homebrew:
@@ -31,28 +31,28 @@ Or download it from the [releases page][] and add it to your binaries folder:
 
 ```bash
 mv ~/Downloads/gk /usr/local/bin/gk
-``` 
+```
 ______
 ### Unix / Ubuntu
 `gk` is available as a downloadable binary from the [releases page][]. Once you have it, add it to your binaries folder:
 
 ```bash
 mv ~/Downloads/gk /usr/local/bin/gk
-``` 
+```
 
 Or create a new directory, move the binary and add it to $PATH:
 ```bash
 mkdir "$HOME/cli"
 mv ~/Downloads/gk "$HOME/cli"
 export PATH="$HOME/gk:$PATH"
-``` 
+```
 
 You can also [download][releases page] your corresponding package (`.deb`, `.rpm`) and install it with:
 
 ```bash
 sudo apt install ./gk.deb
 ```
-or 
+or
 ```bash
 sudo rpm -i ./gk.rpm
 ```
@@ -70,6 +70,41 @@ You can also download it using [Chocolatey][chocolatey]:
 choco install gkcli
 ```
 
+#### Optional Enable Auto Command Completion
+To enable auto-completion for `gk` in PowerShell, follow these steps:
+
+**Create and Save the Install Scripts**
+Appendix section with script files:
+- [gkcli-update-profile.ps1](#gkcli-update-profileps1)
+- [gkcli-uninstall-profile.ps1](#gkcli-uninstall-profileps1)
+
+##### Run the Installer Scripts
+- Change to the directory where update-profile.ps1 is located
+```sh
+cd "C:\Path\To\gkcli-update-profile.ps1"
+```
+
+- Run the script to update the profile and sign the auto-completion script
+```sh
+.\gkcli-update-profile.ps1
+```
+- Restart PowerShell to apply the changes.
+
+##### Run the Uninstall Script
+ - Change to the directory where uninstall-profile.ps1 is located
+```sh
+cd "C:\Path\To\gkcli-uninstall-profile.ps1"
+```
+
+- Run the script to remove the auto-completion setup
+```sh
+.\gkcli-uninstall-profile.ps1
+```
+
+- Restart PowerShell to apply the changes.
+
+
+
 Or download the binary from the [releases page][] and place the `gk.exe` in a desired folder.
 Then edit your environment variables to add it to your PATH.
 
@@ -77,7 +112,7 @@ Then edit your environment variables to add it to your PATH.
 2. Click on the **Edit the system environment variables** result.
 3. In the modal, click on the **Environment Variables...** button.
 4. In the **System Variables** section, scroll until you find the **PATH** variable. Click on it.
-    - If it doesn't exist, create a variable with the name **PATH**. 
+    - If it doesn't exist, create a variable with the name **PATH**.
 5. Add the path to the `gk` binary at the end.
 
 
@@ -101,13 +136,13 @@ unalias gk
 
 ### What are Cloud Patches and why would you want to use them
 
-A Cloud Patch is a Git patch that GitKraken securely stores for you so it can be easily shared with others across the GitKraken CLI, GitKraken Desktop, and GitLens. The patch is directly transferred from your machine into secure storage. 
+A Cloud Patch is a Git patch that GitKraken securely stores for you so it can be easily shared with others across the GitKraken CLI, GitKraken Desktop, and GitLens. The patch is directly transferred from your machine into secure storage.
 
 Cloud Patches allow the ability to engage early with your team before a pull request. They can be created as soon as you have a work in progress. This can help with collaborating on changes prior to a pull request and minimize the delay of pull request reviews.
 
-### How to setup Cloud Patches 
+### How to setup Cloud Patches
 
-Cloud Patches are enabled in the GitKraken CLI by default. 
+Cloud Patches are enabled in the GitKraken CLI by default.
 
 ### How to work with Cloud Patches
 
@@ -145,13 +180,13 @@ If you do not want your Cloud Patch data stored on GitKraken Servers, we offer t
 
 ## Code Suggest
 
-GitKraken Code Suggest simplifies code review by allowing you to make suggestions and edits across the entire project, not just on the lines that were changed, within GitLens, GitKraken Desktop, and gitkraken.dev. When a Pull Request is open, you can make suggestions to the pull request that others can then review and accept to include in the pull request. 
+GitKraken Code Suggest simplifies code review by allowing you to make suggestions and edits across the entire project, not just on the lines that were changed, within GitLens, GitKraken Desktop, and gitkraken.dev. When a Pull Request is open, you can make suggestions to the pull request that others can then review and accept to include in the pull request.
 
 ![cli-code-suggest.png](/.github/images/cli-code-suggest.png)
 
-To start, navigate (`cd`) to a repository with an open pull request. Then, check out the branch with the open pull request (`git checkout branch-name`). Next, begin making the desired changes locally that you would like to include as suggestions. The [Launchpad](#-launchpad) can quickly help you see open pull requests, check out branches, and begin working. 
+To start, navigate (`cd`) to a repository with an open pull request. Then, check out the branch with the open pull request (`git checkout branch-name`). Next, begin making the desired changes locally that you would like to include as suggestions. The [Launchpad](#-launchpad) can quickly help you see open pull requests, check out branches, and begin working.
 
-Once you are ready to suggest the changes, run `gk pr suggest`, 
+Once you are ready to suggest the changes, run `gk pr suggest`,
 
 ![cli-code-suggest.png](/.github/images/cli-create-code-suggestion.gif)
 
@@ -159,11 +194,11 @@ This will include a comment on the pull request with two options: you can select
 
 ![gl-code-suggest-comment.png](/.github/images/gl-code-suggest-comment.png)
 
-When selecting the _Code Suggestion for #PR_ you will be taken to gitkraken.dev to review and accept the changes. Here, you can review the changes by selecting each file and once you are ready, you can select _Commit Suggestions_. This will create a new commit on the remote for the existing branch (shown under _COMMIT SUGGESTIONS TO_). 
+When selecting the _Code Suggestion for #PR_ you will be taken to gitkraken.dev to review and accept the changes. Here, you can review the changes by selecting each file and once you are ready, you can select _Commit Suggestions_. This will create a new commit on the remote for the existing branch (shown under _COMMIT SUGGESTIONS TO_).
 
 ![gl-accept-code-suggestion.gif](/.github/images/gl-accept-code-suggestion.gif)
 
-When selecting _locally on your machine_ you can open them on [GitKraken Desktop](/gitkraken-client/pull-requests/#review-code-and-suggest-changes) or [GitLens](gitlens/gitlens-features/#code-suggest-preview). Here, you can review the changes by selecting each file and once you are ready, you can select _Apply_ to apply to the branch you currently have checked out or select the dropdown and then _Apply to a Branch_ to apply to a new branch or select an existing branch. This will apply the patch locally. 
+When selecting _locally on your machine_ you can open them on [GitKraken Desktop](/gitkraken-client/pull-requests/#review-code-and-suggest-changes) or [GitLens](gitlens/gitlens-features/#code-suggest-preview). Here, you can review the changes by selecting each file and once you are ready, you can select _Apply_ to apply to the branch you currently have checked out or select the dropdown and then _Apply to a Branch_ to apply to a new branch or select an existing branch. This will apply the patch locally.
 
 ![gl-accept-code-suggestion-from-gl.gif](/.github/images/gl-accept-code-suggestion-from-gl.gif)
 
@@ -268,3 +303,135 @@ https://user-images.githubusercontent.com/3358707/231006608-18f3dca2-a67c-4e77-b
 [macports]: https://www.macports.org/
 [winget]: https://github.com/microsoft/winget-cli
 [chocolatey]: https://community.chocolatey.org/packages/GKCLI
+
+
+
+## Appendix
+
+### gkcli-update-profile.ps1
+>Note: the installer script creates a self-signed certificate and adds it to the trusted root.
+
+```sh
+# gkcli-update-profile.ps1
+
+function Test-Admin {
+    $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+    $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+if (-not (Test-Admin)) {
+    Write-Warning "This script requires elevation (run as administrator)."
+    exit 1
+}
+
+$gkPath = (Get-Command gk).Source
+
+$gkDir = Split-Path $gkPath
+
+$completionScriptPath = Join-Path -Path $gkDir -ChildPath "completions\gk.ps1"
+
+if (-Not (Test-Path -Path $completionScriptPath)) {
+    Write-Error "The auto-completion script gk.ps1 could not be found at $completionScriptPath"
+    exit 1
+}
+
+$signature = Get-AuthenticodeSignature -FilePath $completionScriptPath
+if ($signature.Status -ne 'Valid') {
+    Write-Host "The script is not signed. Creating a self-signed certificate and signing the script."
+
+    # Create a self-signed certificate for script signing
+    $cert = New-SelfSignedCertificate -DnsName "GitKrakenCLI" -Type CodeSigningCert -CertStoreLocation "Cert:\CurrentUser\My"
+
+    # Export the certificate to a file
+    $certPath = "$env:TEMP\GitKrakenCLI.cer"
+    Export-Certificate -Cert $cert -FilePath $certPath
+
+    # Import the certificate into Trusted Root Certification Authorities and Trusted Publishers
+    Import-Certificate -FilePath $certPath -CertStoreLocation "Cert:\LocalMachine\Root" -ErrorAction Stop
+    Import-Certificate -FilePath $certPath -CertStoreLocation "Cert:\LocalMachine\TrustedPublisher" -ErrorAction Stop
+
+    # Sign the completion script with the certificate
+    Set-AuthenticodeSignature -FilePath $completionScriptPath -Certificate $cert
+
+    Write-Host "Script signed successfully and certificate added to Trusted Root Certification Authorities and Trusted Publishers."
+} else {
+    Write-Host "The script is already signed."
+}
+
+$profilePath = [System.Environment]::GetFolderPath('MyDocuments') + "\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
+
+# Create the profile file if it doesn't exist
+if (-Not (Test-Path -Path $profilePath)) {
+    New-Item -ItemType File -Path $profilePath -Force
+}
+
+$content = Get-Content -Path $profilePath
+if (-Not ($content -contains ". '$completionScriptPath'")) {
+    Add-Content -Path $profilePath -Value "`n. '$completionScriptPath'"
+    Write-Host "The PowerShell profile has been updated to source the auto-completion script."
+} else {
+    Write-Host "The PowerShell profile already sources the auto-completion script."
+}
+
+# Source the completion script in the current session
+. $completionScriptPath
+
+Write-Host "Auto-completion script sourced successfully. Please restart PowerShell to activate the changes."
+
+```
+### gkcli-uninstall-profile.ps1
+```sh
+# gkcli-uninstall-profile.ps1
+
+function Test-Admin {
+    $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+    $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+if (-not (Test-Admin)) {
+    Write-Warning "This script requires elevation (run as administrator)."
+    exit 1
+}
+
+$certSubjectName = "CN=GitKrakenCLI"
+
+function Remove-Certificate {
+    param (
+        [string]$storeName,
+        [string]$storeLocation,
+        [string]$subjectName
+    )
+    $store = New-Object System.Security.Cryptography.X509Certificates.X509Store($storeName, $storeLocation)
+    $store.Open("ReadWrite")
+    $certs = $store.Certificates | Where-Object { $_.Subject -eq $subjectName }
+    if ($certs.Count -gt 0) {
+        $store.Remove($certs)
+        Write-Host "Removed certificate from $storeName."
+    } else {
+        Write-Host "Certificate not found in $storeName."
+    }
+    $store.Close()
+}
+
+Remove-Certificate -storeName "Root" -storeLocation "LocalMachine" -subjectName $certSubjectName
+Remove-Certificate -storeName "TrustedPublisher" -storeLocation "LocalMachine" -subjectName $certSubjectName
+
+$gkPath = (Get-Command gk).Source
+
+$gkDir = Split-Path $gkPath
+
+$completionScriptPath = Join-Path -Path $gkDir -ChildPath "completions\gk.ps1"
+
+$profilePath = [System.Environment]::GetFolderPath('MyDocuments') + "\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
+if (Test-Path -Path $profilePath) {
+    $content = Get-Content -Path $profilePath
+    $newContent = $content | Where-Object { $_ -notmatch [regex]::Escape(". '$completionScriptPath'") }
+    Set-Content -Path $profilePath -Value $newContent
+    Write-Host "Removed the auto-completion script sourcing line from the PowerShell profile."
+} else {
+    Write-Host "PowerShell profile not found."
+}
+
+Write-Host "Uninstallation complete. Please restart PowerShell to apply the changes."
+
+```
