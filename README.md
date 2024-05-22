@@ -70,137 +70,13 @@ You can also download it using [Chocolatey][chocolatey]:
 choco install gkcli
 ```
 
-#### Post Installation to Enable Auto Command Completion
+#### Optional Enable Auto Command Completion
 To enable auto-completion for `gk` in PowerShell, follow these steps:
->Note: the installer script creates a self-signed certificate and adds it to the trusted root.
-
 
 **Create and Save the Install Scripts**
-```sh
-# gkcli-update-profile.ps1
-
-function Test-Admin {
-    $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-    $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-}
-
-if (-not (Test-Admin)) {
-    Write-Warning "This script requires elevation (run as administrator)."
-    exit 1
-}
-
-$gkPath = (Get-Command gk).Source
-
-$gkDir = Split-Path $gkPath
-
-$completionScriptPath = Join-Path -Path $gkDir -ChildPath "completions\gk.ps1"
-
-if (-Not (Test-Path -Path $completionScriptPath)) {
-    Write-Error "The auto-completion script gk.ps1 could not be found at $completionScriptPath"
-    exit 1
-}
-
-$signature = Get-AuthenticodeSignature -FilePath $completionScriptPath
-if ($signature.Status -ne 'Valid') {
-    Write-Host "The script is not signed. Creating a self-signed certificate and signing the script."
-
-    # Create a self-signed certificate for script signing
-    $cert = New-SelfSignedCertificate -DnsName "GitKrakenCLI" -Type CodeSigningCert -CertStoreLocation "Cert:\CurrentUser\My"
-
-    # Export the certificate to a file
-    $certPath = "$env:TEMP\GitKrakenCLI.cer"
-    Export-Certificate -Cert $cert -FilePath $certPath
-
-    # Import the certificate into Trusted Root Certification Authorities and Trusted Publishers
-    Import-Certificate -FilePath $certPath -CertStoreLocation "Cert:\LocalMachine\Root" -ErrorAction Stop
-    Import-Certificate -FilePath $certPath -CertStoreLocation "Cert:\LocalMachine\TrustedPublisher" -ErrorAction Stop
-
-    # Sign the completion script with the certificate
-    Set-AuthenticodeSignature -FilePath $completionScriptPath -Certificate $cert
-
-    Write-Host "Script signed successfully and certificate added to Trusted Root Certification Authorities and Trusted Publishers."
-} else {
-    Write-Host "The script is already signed."
-}
-
-$profilePath = [System.Environment]::GetFolderPath('MyDocuments') + "\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
-
-# Create the profile file if it doesn't exist
-if (-Not (Test-Path -Path $profilePath)) {
-    New-Item -ItemType File -Path $profilePath -Force
-}
-
-$content = Get-Content -Path $profilePath
-if (-Not ($content -contains ". '$completionScriptPath'")) {
-    Add-Content -Path $profilePath -Value "`n. '$completionScriptPath'"
-    Write-Host "The PowerShell profile has been updated to source the auto-completion script."
-} else {
-    Write-Host "The PowerShell profile already sources the auto-completion script."
-}
-
-# Source the completion script in the current session
-. $completionScriptPath
-
-Write-Host "Auto-completion script sourced successfully. Please restart PowerShell to activate the changes."
-
-```
-
-**Create and Save the Uninstall Script**
-```sh
-# gkcli-uninstall-profile.ps1
-
-function Test-Admin {
-    $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-    $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-}
-
-if (-not (Test-Admin)) {
-    Write-Warning "This script requires elevation (run as administrator)."
-    exit 1
-}
-
-$certSubjectName = "CN=GitKrakenCLI"
-
-function Remove-Certificate {
-    param (
-        [string]$storeName,
-        [string]$storeLocation,
-        [string]$subjectName
-    )
-    $store = New-Object System.Security.Cryptography.X509Certificates.X509Store($storeName, $storeLocation)
-    $store.Open("ReadWrite")
-    $certs = $store.Certificates | Where-Object { $_.Subject -eq $subjectName }
-    if ($certs.Count -gt 0) {
-        $store.Remove($certs)
-        Write-Host "Removed certificate from $storeName."
-    } else {
-        Write-Host "Certificate not found in $storeName."
-    }
-    $store.Close()
-}
-
-Remove-Certificate -storeName "Root" -storeLocation "LocalMachine" -subjectName $certSubjectName
-Remove-Certificate -storeName "TrustedPublisher" -storeLocation "LocalMachine" -subjectName $certSubjectName
-
-$gkPath = (Get-Command gk).Source
-
-$gkDir = Split-Path $gkPath
-
-$completionScriptPath = Join-Path -Path $gkDir -ChildPath "completions\gk.ps1"
-
-$profilePath = [System.Environment]::GetFolderPath('MyDocuments') + "\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
-if (Test-Path -Path $profilePath) {
-    $content = Get-Content -Path $profilePath
-    $newContent = $content | Where-Object { $_ -notmatch [regex]::Escape(". '$completionScriptPath'") }
-    Set-Content -Path $profilePath -Value $newContent
-    Write-Host "Removed the auto-completion script sourcing line from the PowerShell profile."
-} else {
-    Write-Host "PowerShell profile not found."
-}
-
-Write-Host "Uninstallation complete. Please restart PowerShell to apply the changes."
-
-```
+Appendix section with script files:
+- [gkcli-update-profile.ps1](#gkcli-update-profileps1)
+- [gkcli-uninstall-profile.ps1](#gkcli-uninstall-profileps1)
 
 ##### Run the Installer Scripts
 - Change to the directory where update-profile.ps1 is located
@@ -224,6 +100,7 @@ cd "C:\Path\To\gkcli-uninstall-profile.ps1"
 ```sh
 .\gkcli-uninstall-profile.ps1
 ```
+
 - Restart PowerShell to apply the changes.
 
 
@@ -426,3 +303,135 @@ https://user-images.githubusercontent.com/3358707/231006608-18f3dca2-a67c-4e77-b
 [macports]: https://www.macports.org/
 [winget]: https://github.com/microsoft/winget-cli
 [chocolatey]: https://community.chocolatey.org/packages/GKCLI
+
+
+
+## Appendix
+
+### gkcli-update-profile.ps1
+>Note: the installer script creates a self-signed certificate and adds it to the trusted root.
+
+```sh
+# gkcli-update-profile.ps1
+
+function Test-Admin {
+    $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+    $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+if (-not (Test-Admin)) {
+    Write-Warning "This script requires elevation (run as administrator)."
+    exit 1
+}
+
+$gkPath = (Get-Command gk).Source
+
+$gkDir = Split-Path $gkPath
+
+$completionScriptPath = Join-Path -Path $gkDir -ChildPath "completions\gk.ps1"
+
+if (-Not (Test-Path -Path $completionScriptPath)) {
+    Write-Error "The auto-completion script gk.ps1 could not be found at $completionScriptPath"
+    exit 1
+}
+
+$signature = Get-AuthenticodeSignature -FilePath $completionScriptPath
+if ($signature.Status -ne 'Valid') {
+    Write-Host "The script is not signed. Creating a self-signed certificate and signing the script."
+
+    # Create a self-signed certificate for script signing
+    $cert = New-SelfSignedCertificate -DnsName "GitKrakenCLI" -Type CodeSigningCert -CertStoreLocation "Cert:\CurrentUser\My"
+
+    # Export the certificate to a file
+    $certPath = "$env:TEMP\GitKrakenCLI.cer"
+    Export-Certificate -Cert $cert -FilePath $certPath
+
+    # Import the certificate into Trusted Root Certification Authorities and Trusted Publishers
+    Import-Certificate -FilePath $certPath -CertStoreLocation "Cert:\LocalMachine\Root" -ErrorAction Stop
+    Import-Certificate -FilePath $certPath -CertStoreLocation "Cert:\LocalMachine\TrustedPublisher" -ErrorAction Stop
+
+    # Sign the completion script with the certificate
+    Set-AuthenticodeSignature -FilePath $completionScriptPath -Certificate $cert
+
+    Write-Host "Script signed successfully and certificate added to Trusted Root Certification Authorities and Trusted Publishers."
+} else {
+    Write-Host "The script is already signed."
+}
+
+$profilePath = [System.Environment]::GetFolderPath('MyDocuments') + "\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
+
+# Create the profile file if it doesn't exist
+if (-Not (Test-Path -Path $profilePath)) {
+    New-Item -ItemType File -Path $profilePath -Force
+}
+
+$content = Get-Content -Path $profilePath
+if (-Not ($content -contains ". '$completionScriptPath'")) {
+    Add-Content -Path $profilePath -Value "`n. '$completionScriptPath'"
+    Write-Host "The PowerShell profile has been updated to source the auto-completion script."
+} else {
+    Write-Host "The PowerShell profile already sources the auto-completion script."
+}
+
+# Source the completion script in the current session
+. $completionScriptPath
+
+Write-Host "Auto-completion script sourced successfully. Please restart PowerShell to activate the changes."
+
+```
+### gkcli-uninstall-profile.ps1
+```sh
+# gkcli-uninstall-profile.ps1
+
+function Test-Admin {
+    $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+    $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+if (-not (Test-Admin)) {
+    Write-Warning "This script requires elevation (run as administrator)."
+    exit 1
+}
+
+$certSubjectName = "CN=GitKrakenCLI"
+
+function Remove-Certificate {
+    param (
+        [string]$storeName,
+        [string]$storeLocation,
+        [string]$subjectName
+    )
+    $store = New-Object System.Security.Cryptography.X509Certificates.X509Store($storeName, $storeLocation)
+    $store.Open("ReadWrite")
+    $certs = $store.Certificates | Where-Object { $_.Subject -eq $subjectName }
+    if ($certs.Count -gt 0) {
+        $store.Remove($certs)
+        Write-Host "Removed certificate from $storeName."
+    } else {
+        Write-Host "Certificate not found in $storeName."
+    }
+    $store.Close()
+}
+
+Remove-Certificate -storeName "Root" -storeLocation "LocalMachine" -subjectName $certSubjectName
+Remove-Certificate -storeName "TrustedPublisher" -storeLocation "LocalMachine" -subjectName $certSubjectName
+
+$gkPath = (Get-Command gk).Source
+
+$gkDir = Split-Path $gkPath
+
+$completionScriptPath = Join-Path -Path $gkDir -ChildPath "completions\gk.ps1"
+
+$profilePath = [System.Environment]::GetFolderPath('MyDocuments') + "\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
+if (Test-Path -Path $profilePath) {
+    $content = Get-Content -Path $profilePath
+    $newContent = $content | Where-Object { $_ -notmatch [regex]::Escape(". '$completionScriptPath'") }
+    Set-Content -Path $profilePath -Value $newContent
+    Write-Host "Removed the auto-completion script sourcing line from the PowerShell profile."
+} else {
+    Write-Host "PowerShell profile not found."
+}
+
+Write-Host "Uninstallation complete. Please restart PowerShell to apply the changes."
+
+```
