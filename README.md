@@ -34,6 +34,9 @@ mv ~/Downloads/gk /usr/local/bin/gk
 ```
 ______
 ### Unix / Ubuntu
+
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/gitkraken-cli)
+
 `gk` is available as a downloadable binary from the [releases page][]. Once you have it, add it to your binaries folder:
 
 ```bash
