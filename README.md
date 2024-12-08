@@ -123,31 +123,6 @@ Then edit your environment variables to add it to your PATH.
 ### Nerd Fonts
 The GitKraken CLI supports Nerd Fonts to display icons for some commands. To ensure correct icon rendering, please obtain and install a Nerd Font available at https://www.nerdfonts.com/. After installation, set the selected Nerd Font as the default font for your terminal.
 
-### Themes
-Customize your experience with the theme system. This feature allows you to create custom color schemes and adapt the interface to your preference in both light and dark environments.
-
-#### Creating a custom theme
-1. Navigate to the installation folder
-2. Create a new JSON file inside the ```themes``` folder
-3. Define colors using hexadecimal codes inside the new file. You can see all possible options in the default theme ```gk_theme.json```.
-
- - There are two possible options to define colors:
-
-    ```
-    "accent": {
-        "dark": "93A9EC",
-        "light": "93A9EC"
-    }
-    ```
-    or
-    
-    ```
-    "accent": "93A9EC"
-    ```
-
-4. Execute ```gk setting --theme NAME_OF_THE_NEW_FILE```
-5. View the changes with ```gk setting theme```
-
 ## Troubleshooting
 
 ### ```gk login``` freezes after authenticating in browser
