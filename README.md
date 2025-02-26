@@ -73,6 +73,16 @@ You can also download it using [Chocolatey][chocolatey]:
 choco install gkcli
 ```
 
+Or using [scoop][scoop] package
+
+<a href="https://github.com/ScoopInstaller/Main/blob/master/bucket/gk.json">
+  <img src="https://repology.org/badge/version-for-repo/scoop/gk.svg" alt="Scoop package">
+</a>
+
+```bash
+scoop install gk
+```
+
 #### Optional Enable Auto Command Completion
 To enable auto-completion for `gk` in PowerShell, follow these steps:
 
@@ -331,7 +341,7 @@ https://user-images.githubusercontent.com/3358707/231006608-18f3dca2-a67c-4e77-b
 [macports]: https://www.macports.org/
 [winget]: https://github.com/microsoft/winget-cli
 [chocolatey]: https://community.chocolatey.org/packages/GKCLI
-
+[scoop]: https://scoop.sh/#/apps?q=gk
 
 
 ## Appendix
