@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "johnsoncodehk.vscode-typescript-web",
+        "vscodevim.vim",
+        "ms-vscode-remote.remote-wsl"
+    ]
+}

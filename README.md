@@ -15,14 +15,17 @@ Check out the [installation instructions](#installation) and [examples](#example
 ## Installation
 
 ### macOS
+
 `gk` is available from [Homebrew][brew] and [MacPorts][macports] with the following command:
 
 Homebrew:
+
 ```bash
 brew install gitkraken-cli
 ```
 
 MacPorts:
+
 ```bash
 sudo port install gk
 ```
@@ -32,7 +35,9 @@ Or download it from the [releases page][] and add it to your binaries folder:
 ```bash
 mv ~/Downloads/gk /usr/local/bin/gk
 ```
+
 ______
+
 ### Unix / Ubuntu
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/gitkraken-cli)
@@ -44,6 +49,7 @@ mv ~/Downloads/gk /usr/local/bin/gk
 ```
 
 Or create a new directory, move the binary and add it to $PATH:
+
 ```bash
 mkdir "$HOME/cli"
 mv ~/Downloads/gk "$HOME/cli"
@@ -55,12 +61,17 @@ You can also [download][releases page] your corresponding package (`.deb`, `.rpm
 ```bash
 sudo apt install ./gk.deb
 ```
+
 or
+
 ```bash
-sudo rpm -i ./gk.rpm
+sudo rpm -i ./gkpm
 ```
+
 _____
+
 ### Windows
+
 `gk` is available from [Winget][winget] with the following command:
 
 ```bash
@@ -74,39 +85,46 @@ choco install gkcli
 ```
 
 #### Optional Enable Auto Command Completion
+
 To enable auto-completion for `gk` in PowerShell, follow these steps:
 
 **Create and Save the Install Scripts**
 Appendix section with script files:
+
 - [gkcli-update-profile.ps1](#gkcli-update-profileps1)
 - [gkcli-uninstall-profile.ps1](#gkcli-uninstall-profileps1)
 
 ##### Run the Installer Scripts
+
 - Change to the directory where update-profile.ps1 is located
+
 ```sh
 cd "C:\Path\To\gkcli-update-profile.ps1"
 ```
 
 - Run the script to update the profile and sign the auto-completion script
+
 ```sh
 .\gkcli-update-profile.ps1
 ```
+
 - Restart PowerShell to apply the changes.
 
 ##### Run the Uninstall Script
- - Change to the directory where uninstall-profile.ps1 is located
+
+- Change to the directory where uninstall-profile.ps1 is located
+
 ```sh
 cd "C:\Path\To\gkcli-uninstall-profile.ps1"
 ```
 
 - Run the script to remove the auto-completion setup
+
 ```sh
 .\gkcli-uninstall-profile.ps1
 ```
 
 - Restart PowerShell to apply the changes.
-
-
 
 Or download the binary from the [releases page][] and place the `gk.exe` in a desired folder.
 Then edit your environment variables to add it to your PATH.
@@ -118,20 +136,23 @@ Then edit your environment variables to add it to your PATH.
     - If it doesn't exist, create a variable with the name **PATH**.
 5. Add the path to the `gk` binary at the end.
 
-
 ## ⚙️ Configuration
+
 ### Nerd Fonts
-The GitKraken CLI supports Nerd Fonts to display icons for some commands. To ensure correct icon rendering, please obtain and install a Nerd Font available at https://www.nerdfonts.com/. After installation, set the selected Nerd Font as the default font for your terminal.
+
+The GitKraken CLI supports Nerd Fonts to display icons for some commands. To ensure correct icon rendering, please obtain and install a Nerd Font available at <https://www.nerdfonts.com/>. After installation, set the selected Nerd Font as the default font for your terminal.
 
 ### Themes
+
 Customize your experience with the theme system. This feature allows you to create custom color schemes and adapt the interface to your preference in both light and dark environments.
 
 #### Creating a custom theme
+
 1. Navigate to the installation folder
 2. Create a new JSON file inside the ```themes``` folder
 3. Define colors using hexadecimal codes inside the new file. You can see all possible options in the default theme ```gk_theme.json```.
 
- - There are two possible options to define colors:
+- There are two possible options to define colors:
 
     ```
     "accent": {
@@ -139,8 +160,9 @@ Customize your experience with the theme system. This feature allows you to crea
         "light": "93A9EC"
     }
     ```
+
     or
-    
+
     ```
     "accent": "93A9EC"
     ```
@@ -151,9 +173,11 @@ Customize your experience with the theme system. This feature allows you to crea
 ## Troubleshooting
 
 ### ```gk login``` freezes after authenticating in browser
+
 This problem is due to the browser. Currently we know that Safari and Brave do not allow to respond to localhost through port 1314. To fix this, change your default browser or copy the URL before the redirect and open it in another browser.
 
 ### gk from Oh-My-Zsh
+
 Oh-My-Zsh has ```gitk``` aliased as ```gk``` and that can create some problems. To fix this, type in your terminal:
 
 ```
@@ -196,9 +220,9 @@ Cloud Patches can be viewed from URLs shared to you and they can be applied to y
 
 Here are some other helpful commands to be used with Cloud Patches:
 
-* `gk patch view` - preview the changes of a Cloud Patch
-* `gk patch list` - list all your Cloud Patches
-* `gk patch delete` - delete a Cloud Patch
+- `gk patch view` - preview the changes of a Cloud Patch
+- `gk patch list` - list all your Cloud Patches
+- `gk patch delete` - delete a Cloud Patch
 
 ### Self-Hosting Cloud Patch data
 
@@ -243,51 +267,71 @@ GitKraken Launchpad is a unified dashboard that consolidates PRs, Issues, and WI
 ![cli-launchpad.png](/.github/images/cli-launchpad.png)
 
 #### Pin items to keep them at the top of your list
+
 Use the shortcut <kbd>p</kbd> to pin any PR or Issue to the top of the list. You can unpin an item by using the same shortcut on any pinned item.
+
 #### Snooze items to save them for later
+
 Use the shortcut <kbd>s</kbd> to snooze any PR or Issue, removing them from the list of items. You can view snoozed items by navigating to the `Snoozed` tab in the Launchpad. You can unsnooze items and bring them back into your Launchpad lists by using the same shortcut on any snoozed item.
 
 ### 🤝 Create Workspaces to group repos
+
 ```
 gk ws create
 ```
+
 GitKraken workspaces associate groups of repos and set the context for helpful commands that can operate on, or get information for, multiple repos at once. There are two types of workspaces:
+
 ##### Local
+
 Local Workspaces exist only on your machine.
+
 ##### Cloud
+
 Cloud Workspaces are accessible on any machine, and can be connected to hosting and issue providers like GitHub and GitLab to get additional information about pull requests and issues. Share Cloud Workspaces with your team to improve onboarding with the ability to clone all repos at once. To enable this extra functionality, Cloud Workspaces require a free GitKraken account. We are continuing to evolve and improve GitKraken Workspaces and welcome any feedback.
 
 <img width="486" alt="gk-ws-create-demo" src="https://user-images.githubusercontent.com/3358707/231017646-6401a751-b3ac-486d-8520-55c006843c9d.png">
 
 #### Adding and locating repos
+
 ```
 gk ws add-repo
 ```
+
 This will add a new repo to a workspace either by path or remote URL.
+
 ```
 gk ws locate
 ```
+
 If you're accessing a Cloud Workspace for the first time, you might need to `locate` the local repos on your machine. Run this command in the directory where youre repos are located so `gk` knows where they are.
+
 ```
 gk ws clone
 ```
+
 You can also `clone` all repos in a Workspace at once into a single directory. This is helpful for onboarding when your team works on multiple repos.
 
 ### 🎬 Perform `git` actions on multiple repos at once
+
 ```
 gk ws [action]
 ```
+
 In any workspace, you can perform `git` operations like `fetch`, `pull`, `push`, and `checkout` across all repos in the workspace.
 
 ### 📋 Get pull requests and issues
+
 ```
 gk provider add
 ```
+
 Before fetching pull requests and issues, ensure that you have the appropriate provider (GitHub, GitLab, etc.) connected. This will open a browser to authenticate.
 
 ```
 gk pr list
 ```
+
 When a Cloud Workspace has a provider connected, you can list all pull requests and issues for repos in the workspace, and view details for a specific one.
 
 <img width="612" alt="gk-pr-list-demo" src="https://user-images.githubusercontent.com/3358707/231019508-8923bb6e-7e33-4be1-8427-915ab97bca21.png">
@@ -295,16 +339,19 @@ When a Cloud Workspace has a provider connected, you can list all pull requests 
 ```
 gk pr view
 ```
+
 Returns a list of all pull requests for all repos in a workspace. Type to search for a specific pull request and press `enter` to view details.
 
 <img width="540" alt="gk-pr-view-demo" src="https://user-images.githubusercontent.com/3358707/231217076-0e01e129-454d-4d56-aeb0-5fb07d1686de.png">
 
-
 ### 📈 Pull Request Insights
+
 ```
 gk ws insights
 ```
+
 See the following metrics for all repositories in a Cloud Workspace. The default time period is 7 days, but can be increased to 14 days with any paid GitKraken license.
+
 - Average Cycle Time
 - Average Throughput
 - Merge Rate
@@ -315,15 +362,14 @@ See the following metrics for all repositories in a Cloud Workspace. The default
 <img width="323" alt="gk-ws-insights-demo" src="https://user-images.githubusercontent.com/3358707/231011050-77518483-874e-48c7-8de6-0834eb0cc312.png">
 
 ### ✨ Visual Commit Graph
+
 ```
 gk graph
 ```
+
 Open a visual graph of the repo in your current directory in either [GitKraken Desktop](https://www.gitkraken.com/git-client) or [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) in VS Code.
 
-
-https://user-images.githubusercontent.com/3358707/231006608-18f3dca2-a67c-4e77-b1e2-f930828a0a02.mov
-
-
+<https://user-images.githubusercontent.com/3358707/231006608-18f3dca2-a67c-4e77-b1e2-f930828a0a02.mov>
 
 [documentation]: https://gitkraken.github.io/gk-cli/
 [releases page]: https://github.com/gitkraken/gk-cli/releases/latest
@@ -332,11 +378,10 @@ https://user-images.githubusercontent.com/3358707/231006608-18f3dca2-a67c-4e77-b
 [winget]: https://github.com/microsoft/winget-cli
 [chocolatey]: https://community.chocolatey.org/packages/GKCLI
 
-
-
 ## Appendix
 
 ### gkcli-update-profile.ps1
+>
 >Note: the installer script creates a self-signed certificate and adds it to the trusted root.
 
 ```sh
@@ -407,7 +452,9 @@ if (-Not ($content -contains ". '$completionScriptPath'")) {
 Write-Host "Auto-completion script sourced successfully. Please restart PowerShell to activate the changes."
 
 ```
+
 ### gkcli-uninstall-profile.ps1
+
 ```sh
 # gkcli-uninstall-profile.ps1
 
