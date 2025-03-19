@@ -73,7 +73,7 @@ gk work commit --ai
 gk work push
 
 # Create a Pull Request
-gk work pr --ai
+gk work pr create --ai
 
 ```
 
