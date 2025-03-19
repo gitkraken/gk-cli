@@ -6,7 +6,7 @@ GitKraken CLI is available on macOS, Windows, and Unix systems.
 
 ## Table of Contents
 
-- [Documentation](#-documentation)
+- [Documentation](#documentation)
 - [Workflows](#workflows)
 - [`git` Command Passthrough](#git-command-passthrough)
 - [Installation](#installation)
