@@ -56,11 +56,10 @@ In general, your process will look like this:
 # Authenticate
 gk auth login
 
-# Create a Work Item
+# Navigate to a git repo directory on your filesystem
+# Then create a Work Item and the current directory
+# will be automatically added to the Work Item
 gk work create "My new work item"
-
-# Add a repo to the work item
-gk work add ./path/to/repo # path could be as simple as "." if you are in the directory already
 
 # Make changes to the repo
 # cd ./path/to/repo
@@ -79,6 +78,11 @@ gk work pr --ai
 ```
 
 Once you have familiarized yourself with using a single repo, try out creating work items and generating commits and PRs for multiple repos at a time by just adding multiple repos to a new Work Item.
+
+```bash
+# Add a repo to the current work item
+gk work add ./path/to/repo # path could be as simple as "." if you are in the directory already
+```
 
 ## `git` Command Passthrough
 
