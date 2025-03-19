@@ -1,6 +1,6 @@
 # 🚀 GitKraken CLI
 
-`gk` is GitKraken on the command line. The core functionality is focused on a "Unit of Work" model. This allows you to work with multiple repos at once and get the same UX as if you were in a monorepo. We also provide robust AI-powered commit messages and Pull Request generation (coming soon).
+`gk` is GitKraken on the command line. The core functionality is focused on "Work Items" which can be thought of as the feature or issue you are tryiong to tackle. This allows you to work with multiple repos at once and get the same UX as if you were in a monorepo. We also provide robust AI-powered commit messages and Pull Request generation.
 
 GitKraken CLI is available on macOS, Windows, and Unix systems.
 
