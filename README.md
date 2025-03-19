@@ -57,12 +57,12 @@ In general, your process will look like this:
 gk auth login
 
 # Navigate to a git repo directory on your filesystem
+cd ./path/to/repo
+
 # Then create a Work Item and the current directory
 # will be automatically added to the Work Item
 gk work create "My new work item"
 
-# Make changes to the repo
-# cd ./path/to/repo
 # Edit files...
 # ...
 
