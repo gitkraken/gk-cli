@@ -2,18 +2,92 @@
 
 `gk` is GitKraken on the command line. The core functionality is focused on a "Unit of Work" model. This allows you to work with multiple repos at once and get the same UX as if you were in a monorepo. We also provide robust AI-powered commit messages and Pull Request generation (coming soon).
 
-<p align="center">
-<img src="https://user-images.githubusercontent.com/86774052/225326381-aaea81a3-9f19-4170-9e0b-2f42fac8edda.png" style="margin: 0 auto" />
-</p>
+GitKraken CLI is available on macOS, Windows, and Unix systems.
 
-GitKraken CLI is available on macOS, Windows and Unix systems.
+## Table of Contents
 
-## 📚 Documentation
+- [Documentation](#-documentation)
+- [Workflows](#workflows)
+- [`git` Command Passthrough](#git-command-passthrough)
+- [Installation](#installation)
+- [Troubleshooting](#troubleshooting)
 
-The documentation is currently limited to using the help command from the CLI itself: `gk help`
+## Documentation
+
+`gk help` is going to be your best source for exploring the CLI. But also see the [workflows](#workflows) below.
+
+```bash
+Welcome to GitKraken CLI, a premium CLI experience for managing multiple repositories with familiar GIT CLI commands
+
+Usage:
+  gk [flags]
+  gk [command]
+
+AUTHENTICATING
+  auth         Authenticate with the GitKraken platform
+  provider     Add or remove provider tokens
+
+CORE COMMANDS
+  graph        Display commit graph in current repository
+  issue        Manage your issues
+  organization Manage your Gitkraken organizations
+  work         Interact with your work.
+  workspace    Interact with your workspaces. Alias: 'ws'
+
+Additional Commands:
+  help         Help about any command
+  setup        Print the version number of GK CLI
+  version      Print the version number of GK CLI
+
+Flags:
+  -h, --help   help for gk
+
+Use "gk [command] --help" for more information about a command.
+```
+
+## Workflows
+
+Start with a single repo. You can add more later.
+
+In general, your process will look like this:
 
 ```bash
 
+# Authenticate
+gk auth login
+
+# Create a Work Item
+gk work create "My new work item"
+
+# Add a repo to the work item
+gk work add ./path/to/repo # path could be as simple as "." if you are in the directory already
+
+# Make changes to the repo
+# cd ./path/to/repo
+# Edit files...
+# ...
+
+# Commit your changes using AI
+gk work commit --ai
+
+# Push your changes
+gk work push
+
+# Create a Pull Request
+gk work pr --ai
+
+```
+
+Once you have familiarized yourself with using a single repo, try out creating work items and generating commits and PRs for multiple repos at a time by just adding multiple repos to a new Work Item.
+
+## `git` Command Passthrough
+
+You can also use `gk` to pass through any `git` command. eg:
+
+```bash
+gk status
+gk remote -v
+# etc
 ```
 
 ## Installation
@@ -130,66 +204,11 @@ Oh-My-Zsh has `gitk` aliased as `gk` and that can create some problems. To fix t
 unalias gk
 ```
 
-## Cloud Patches
+## Support
 
-### What are Cloud Patches and why would you want to use them
+If you encounter any bugs, please submit them to our [Support Portal](https://help.gitkraken.com/gitkraken-desktop/contact-support/).
 
-A Cloud Patch is a Git patch that GitKraken securely stores for you so it can be easily shared with others across the GitKraken CLI, GitKraken Desktop, and GitLens. The patch is directly transferred from your machine into secure storage.
-
-Cloud Patches allow the ability to engage early with your team before a pull request. They can be created as soon as you have a work in progress. This can help with collaborating on changes prior to a pull request and minimize the delay of pull request reviews.
-
-### How to setup Cloud Patches
-
-Cloud Patches are enabled in the GitKraken CLI by default.
-
-### How to work with Cloud Patches
-
-To work with Cloud Patches, use `gk patch [command]`. You can run `gk patch` to see all options offered and what they do.
-
-![gk-cli-gk-patch.png](/.github/images/gk-cli-gk-patch.png)
-
-To create a Cloud Patch, run `gk patch create`. You will be prompted to provide information about the patch and what it should be created from. You have the following sharing options:
-
-- `Public`: Anyone that you share the public link with will be able to work with the Cloud Patch.
-
-- `Invite Only`: Only users in the GitKraken Organization who have been selected when sharing will be able to work with the Cloud Patch. They will be required to authenticate with a GitKraken account to access it.
-
-- `Private`: Anyone in the GitKraken Organization will be able to work with the Cloud Patch. They will be required to authenticate with a GitKraken account to access it.
-
-Once the process is completed, you will be provided with a link that can be used by yourself or others to open the cloud patch in GitKraken Desktop or GitLens. From there, the patch can be applied in either to work with those changes. To apply a Cloud Patch at a later time to the current repository, you can run `gk patch apply`.
-
-![gk-cli-gk-patch.png](/.github/images/gk-cli-patch-create-example.gif)
-
-Cloud Patches can be viewed from URLs shared to you and they can be applied to your working tree or to a new or existing branch. Simply select or open the link and then follow the prompts within GitLens or GitKraken Desktop to apply the Cloud Patch.
-
-![gkc-apply-cloud-patch-example.gif](/.github/images/gkc-apply-cloud-patch-example.gif)
-
-Here are some other helpful commands to be used with Cloud Patches:
-
-- `gk patch view` - preview the changes of a Cloud Patch
-- `gk patch list` - list all your Cloud Patches
-- `gk patch delete` - delete a Cloud Patch
-
-### Self-Hosting Cloud Patch data
-
-If you do not want your Cloud Patch data stored on GitKraken Servers, we offer the ability for you to host Cloud Patches on your own AWS S3 storage instance. For more information on configuring this, see our documentation [here](https://help.gitkraken.com/gk-dev/gk-dev-home/#self-hosted).
-
-### ✨ Visual Commit Graph
-
-```
-gk graph
-```
-
-Open a visual graph of the repo in your current directory in either [GitKraken Desktop](https://www.gitkraken.com/git-client) or [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) in VS Code.
-
-https://user-images.githubusercontent.com/3358707/231006608-18f3dca2-a67c-4e77-b1e2-f930828a0a02.mov
-
-[documentation]: https://gitkraken.github.io/gk-cli/
-[releases page]: https://github.com/gitkraken/gk-cli/releases/latest
-[brew]: https://brew.sh/
-[macports]: https://www.macports.org/
-[winget]: https://github.com/microsoft/winget-cli
-[chocolatey]: https://community.chocolatey.org/packages/GKCLI
+General feedback can be submitted via the "#ambassadors" channel in the [GitKraken Community Slack](https://gitkraken.com/slack) as well as via this Google Form.
 
 ## Appendix
 
