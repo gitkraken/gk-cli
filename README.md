@@ -11,6 +11,7 @@ GitKraken CLI is available on macOS, Windows, and Unix systems.
 - [`git` Command Passthrough](#git-command-passthrough)
 - [Installation](#installation)
 - [Troubleshooting](#troubleshooting)
+- [Support](#support)
 
 ## Documentation
 
@@ -137,8 +138,6 @@ Try running `gk --version` again and then click "Open Anyway" to continue.
 ---
 
 ### Unix / Ubuntu
-
-[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/gitkraken-cli)
 
 `gk` is available as a downloadable binary from the [releases page][]. Once you have it, add it to your binaries folder:
 
