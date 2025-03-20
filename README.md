@@ -125,7 +125,7 @@ Test the installation by running `gk --version`.
 
 You will likely run into a security error that looks like this:
 
-![](./not-opened.png)
+![](./images/not-opened.png)
 
 To fix this, go to Settings > Security & Privacy > General and click "Allow Anyway".
 
