@@ -100,11 +100,39 @@ All binaries can be found on the [releases page][]. Make sure you select the bin
 
 ### macOS
 
+If you have the original GitKraken CLI installed, you can use the following command to upgrade to the latest version:
+
+```bash
+brew uninstall gitkraken-cli
+```
+
+`gk` is available as a downloadable binary from the [releases page][].
+
 Download it from the [releases page][], unzip it, and add it to your binaries folder:
 
 ```bash
-mv ~/Downloads/gk /usr/local/bin/gk
+sudo mv ~/Downloads/gk /usr/local/bin/gk
 ```
+
+Then, make sure it's executable:
+
+```bash
+chmod 777 /usr/local/bin/gk
+```
+
+Test the installation by running `gk --version`.
+
+You will likely run into a security error that looks like this:
+
+![](./not-opened.png)
+
+To fix this, go to Settings > Security & Privacy > General and click "Allow Anyway".
+
+![](./images/allow-anyway.png)
+
+Try running `gk --version` again and then click "Open Anyway" to continue.
+
+![](./images/open-anyway.png)
 
 ---
 
