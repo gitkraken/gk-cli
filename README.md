@@ -120,7 +120,7 @@ sudo mv ~/Downloads/gk /usr/local/bin/gk
 Then, make sure it's executable:
 
 ```bash
-chmod 777 /usr/local/bin/gk
+chmod +x /usr/local/bin/gk
 ```
 
 Test the installation by running `gk setup`.
