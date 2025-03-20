@@ -123,7 +123,7 @@ Then, make sure it's executable:
 chmod 777 /usr/local/bin/gk
 ```
 
-Test the installation by running `gk --version`.
+Test the installation by running `gk setup`.
 
 You will likely run into a security error that looks like this:
 
@@ -133,7 +133,7 @@ To fix this, go to Settings > Security & Privacy > General and click "Allow Anyw
 
 ![](./images/allow-anyway.png)
 
-Try running `gk --version` again and then click "Open Anyway" to continue.
+Try running `gk setup` again and then click "Open Anyway" to continue.
 
 ![](./images/open-anyway.png)
 
