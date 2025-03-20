@@ -239,7 +239,7 @@ unalias gk
 
 If you encounter any bugs, please submit them to our [Support Portal](https://help.gitkraken.com/gitkraken-desktop/contact-support/).
 
-General feedback can be submitted via the "#ambassadors" channel in the [GitKraken Community Slack](https://gitkraken.com/slack) as well as via this Google Form.
+General feedback can be submitted via the "#ambassadors" channel in the [GitKraken Community Slack](https://gitkraken.com/slack) as well as via this [Google Form](https://forms.gle/vAa4x8MaYKWcEdSB8).
 
 ## Appendix
 
