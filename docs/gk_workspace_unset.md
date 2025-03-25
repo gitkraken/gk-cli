@@ -1,27 +1,25 @@
-## gk workspace clone
+## gk workspace unset
 
-Clone a workspace
+Clear active workspace
 
 ### Synopsis
 
-
-Clone all repositories of a cloud workspace to your local machine.
-
+Clear out the current active workspace.
 
 ```
-gk workspace clone [flags]
+gk workspace unset [flags]
 ```
 
 ### Examples
 
 ```
-  gk ws clone <name> <root-path>
+  gk ws unset
 ```
 
 ### Options
 
 ```
-  -h, --help   help for clone
+  -h, --help   help for unset
 ```
 
 ### SEE ALSO
