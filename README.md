@@ -101,7 +101,7 @@ gk remote -v
 
 ### macOS
 
-`gk` is available from [Homebrew][brew] with the following command:
+`gk` is available from [Homebrew](https://formulae.brew.sh/cask/gitkraken-cli) with the following command:
 
 Homebrew:
 
@@ -109,7 +109,7 @@ Homebrew:
 brew install gitkraken-cli
 ```
 
-Or download it from the [releases page][] and add it to your binaries folder:
+Or download it from the [releases page](https://github.com/gitkraken/gk-cli/releases) and add it to your binaries folder:
 
 ```bash
 mv ~/Downloads/gk /usr/local/bin/gk
@@ -121,7 +121,7 @@ mv ~/Downloads/gk /usr/local/bin/gk
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/gitkraken-cli)
 
-`gk` is available as a downloadable binary from the [releases page][]. Once you have it, add it to your binaries folder:
+`gk` is available as a downloadable binary from the [releases page](https://github.com/gitkraken/gk-cli/releases). Once you have it, add it to your binaries folder:
 
 ```bash
 mv ~/Downloads/gk /usr/local/bin/gk
