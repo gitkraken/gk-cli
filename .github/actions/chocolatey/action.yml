@@ -1,0 +1,104 @@
+# GitHub Action to automatically create and publish Chocolatey packages for GitKraken CLI
+# This action is triggered during release workflows to distribute GKCLI via Chocolatey package manager
+
+name: 'Chocolatey-releaser-action'
+
+# Input parameters required for this action
+inputs:
+  CHOCO_KEY:
+    required: true
+    description: "Chocolatey API key for publishing packages to chocolatey.org"
+
+runs:
+  using: "composite"
+  steps:
+    # Checkout the repository code to access files needed for packaging
+    - uses: actions/checkout@v3
+    
+    # Extract version number from Git tag by removing the 'v' prefix
+    # Example: v1.2.3 becomes 1.2.3 for use in download URLs and package versioning
+    - name: Delete "v" from version
+      run: echo "VERSION_WITHOUT_V=$('${{ github.ref_name }}'.replace('v',''))" >> $env:GITHUB_ENV
+      shell: pwsh
+
+    # Construct download URLs for both Windows architectures (32-bit and 64-bit)
+    # These URLs point to the GitHub release assets for the current version
+    - name: Set URLs
+      run: |
+        echo "GKCLI_i386_URL=https://github.com/gitkraken/gk-cli/releases/download/v${{ env.VERSION_WITHOUT_V }}/gk_${{ env.VERSION_WITHOUT_V }}_Windows_i386.zip" >> $GITHUB_ENV
+        echo "GKCLI_x86_64_URL=https://github.com/gitkraken/gk-cli/releases/download/v${{ env.VERSION_WITHOUT_V }}/gk_${{ env.VERSION_WITHOUT_V }}_Windows_x86_64.zip" >> $GITHUB_ENV
+      shell: bash
+
+    # Download the release binaries and calculate their SHA256 checksums
+    # Checksums are required by Chocolatey for security verification during installation
+    - name: Download files and calculate checksums
+      run: |
+        curl -L '${{ env.GKCLI_i386_URL }}' -o "i386.zip"
+        echo "CHECKSUM=$(sha256sum 'i386.zip' | cut -d ' ' -f 1)" >> $GITHUB_ENV
+        curl -L '${{ env.GKCLI_x86_64_URL }}' -o "x86_64.zip"
+        echo "CHECKSUM64=$(sha256sum 'x86_64.zip' | cut -d ' ' -f 1)" >> $GITHUB_ENV
+      shell: bash
+
+    # Update the Chocolatey package specification file with the current version
+    # Replaces the $VERSION placeholder with the actual version number
+    - name: Replace nuspec version
+      uses: jacobtomlinson/gha-find-replace@v3
+      with:
+        find: "$VERSION"
+        replace: ${{ env.VERSION_WITHOUT_V }}
+        regex: false
+        include: ".github/actions/chocolatey/cli.nuspec"
+        
+    # Debug step: Display the updated nuspec file contents for verification
+    # TODO: Remove this debug step in production
+    - name: Display updated nuspec file
+      run: |
+        cat .github/actions/chocolatey/cli.nuspec
+      shell: bash
+        
+    # Update the Chocolatey install script with the 32-bit download URL
+    # Replaces the $URL placeholder with the actual GitHub release URL
+    - name: Replace 32-bit download URL
+      uses: jacobtomlinson/gha-find-replace@v3
+      with:
+        find: "$URL"
+        replace: ${{ env.GKCLI_i386_URL }}
+        regex: false
+        include: ".github/actions/chocolatey/tools/chocolateyinstall.ps1"
+
+    # Update the Chocolatey install script with the 64-bit download URL
+    # Replaces the $URL64 placeholder with the actual GitHub release URL
+    - name: Replace 64-bit download URL
+      uses: jacobtomlinson/gha-find-replace@v3
+      with:
+        find: "$URL64"
+        replace: ${{ env.GKCLI_x86_64_URL }}
+        regex: false
+        include: ".github/actions/chocolatey/tools/chocolateyinstall.ps1"
+
+    # Update the Chocolatey install script with the 32-bit binary checksum
+    # This ensures package integrity verification during installation
+    - name: Replace 32-bit checksum
+      uses: jacobtomlinson/gha-find-replace@v3
+      with:
+        find: "$CHECKSUM"
+        replace: ${{ env.CHECKSUM }}
+        regex: false
+        include: ".github/actions/chocolatey/tools/chocolateyinstall.ps1"
+
+    # Update the Chocolatey install script with the 64-bit binary checksum
+    # This ensures package integrity verification during installation
+    - name: Replace 64-bit checksum
+      uses: jacobtomlinson/gha-find-replace@v3
+      with:
+        find: "$CHECKSUM64"
+        replace: ${{ env.CHECKSUM64 }}
+        regex: false
+        include: ".github/actions/chocolatey/tools/chocolateyinstall.ps1"
+
+    # Create the Chocolatey package (.nupkg file) from the nuspec specification
+    # This generates the final package that can be published to chocolatey.org
+    - name: Create Chocolatey package
+      uses: crazy-max/ghaction-chocolatey@v3
+      with:
+        args: pack .github/actions/chocolatey/cli.nuspec
