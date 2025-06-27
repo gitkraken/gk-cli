@@ -1,24 +1,24 @@
-## gk mcp install
+## gk mcp uninstall
 
-Install the GitKraken MCP server in an MCP client
+Uninstall GitKraken MCP server
 
 ### Synopsis
 
 
-Install the GitKraken MCP server in an MCP client.
+Remove Gitkraken MCP server from your platform settings files.
 Supported platforms: vscode, claude, windsurf, cursor, zed
 
 
 ```
-gk mcp install [flags]
+gk mcp uninstall [flags]
 ```
 
 ### Examples
 
 ```
 
-gk mcp install <PLATFORM>
-gk mcp install <PLATFORM> --file-path
+gk mcp uninstall <PLATFORM>
+gk mcp uninstall <PLATFORM> --file-path
 
 ```
 
@@ -26,7 +26,7 @@ gk mcp install <PLATFORM> --file-path
 
 ```
       --file-path string   Fully qualified path to the file the mcp server configuration will be written
-  -h, --help               help for install
+  -h, --help               help for uninstall
 ```
 
 ### SEE ALSO
