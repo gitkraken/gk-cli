@@ -18,6 +18,8 @@ GitKraken CLI is available on macOS, Windows, and Unix systems.
 
 ## MCP Server
 
+[![Trust Score](https://archestra.ai/mcp-catalog/api/badge/quality/gitkraken/gk-cli)](https://archestra.ai/mcp-catalog/gitkraken__gk-cli)
+
 The GitKraken MCP server is a local MCP server that is powerful and easy to use. It wraps git, GitHub, Jira MCP actions as well as provides tools to LLMs that work with GitKraken APIs and functionality. You can find specific installation instructions based on your chosen AI application in the [Help Center](https://help.gitkraken.com/cli/gk-cli-mcp/).
 
 If you want to read more about the MCP server, you can check out the [introduction blog post](https://www.gitkraken.com/blog/introducing-gitkraken-mcp)
