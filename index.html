@@ -1400,29 +1400,41 @@ async function loadTools() {
   renderDomains(domainsToRender);
 }
 
+/* ── SAFE HTML ESCAPING FOR DATA-DRIVEN CONTENT ── */
+function escapeHtml(value) {
+  const div = document.createElement('div');
+  div.textContent = String(value ?? '');
+  return div.innerHTML;
+}
+
 /* ── RENDER DOMAIN CARDS ── */
 function renderDomains(domains) {
   const grid = document.getElementById('domains-grid');
   grid.innerHTML = '';
   (domains || DOMAINS).forEach(d => {
+    const domainTools = Array.isArray(d.tools) ? d.tools : [];
+    const safeDomainId = String(Number(d.id) || 0).padStart(2, '0');
+    const safeDomainIcon = escapeHtml(d.icon || '🔧');
+    const safeDomainTitle = escapeHtml(d.title || 'Unknown Domain');
+
     const card = document.createElement('div');
     card.className = 'domain-card';
     card.style.setProperty('--dc', d.color);
 
-    const toolsHTML = d.tools.map(t => `
+    const toolsHTML = domainTools.map(t => `
       <div class="tool-row">
         <div class="tool-dot"></div>
-        <span class="tool-name">${t.n}</span>
-        <span class="tool-type">${t.t}</span>
+        <span class="tool-name">${escapeHtml(t.n || 'Unknown Tool')}</span>
+        <span class="tool-type">${escapeHtml(t.t || 'TOOL')}</span>
       </div>`).join('');
 
     card.innerHTML = `
       <div class="d-head">
-        <div class="d-icon">${d.icon}</div>
+        <div class="d-icon">${safeDomainIcon}</div>
         <div class="d-meta">
-          <span class="d-num">DOMAIN_${String(d.id).padStart(2,'0')}</span>
-          <div class="d-name">${d.title}</div>
-          <span class="d-count">${d.tools.length} TOOLS AVAILABLE</span>
+          <span class="d-num">DOMAIN_${safeDomainId}</span>
+          <div class="d-name">${safeDomainTitle}</div>
+          <span class="d-count">${domainTools.length} TOOLS AVAILABLE</span>
         </div>
       </div>
       <div class="d-tools">${toolsHTML}</div>
