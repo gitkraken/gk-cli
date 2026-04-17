@@ -25,6 +25,12 @@ gk ai explain commit [flags]
   -p, --path string   (Optional) Repository path
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk ai explain](gk_ai_explain.md)	 - Use AI to explain commits, branches...

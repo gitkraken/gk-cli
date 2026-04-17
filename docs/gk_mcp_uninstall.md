@@ -29,6 +29,12 @@ gk mcp uninstall <PLATFORM> --file-path
   -h, --help               help for uninstall
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk mcp](gk_mcp.md)	 - Start a local MCP server for your favorite MCP client to interact with

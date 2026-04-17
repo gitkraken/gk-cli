@@ -14,6 +14,12 @@ Use AI to explain commits, branches...
   -h, --help   help for explain
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk ai](gk_ai.md)	 - Use AI in the CLI

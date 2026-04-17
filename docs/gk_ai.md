@@ -14,6 +14,12 @@ This command is integrated with Gitkraken AI and provides a convenient way to in
   -h, --help   help for ai
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk](gk.md)	 - GitKraken CLI

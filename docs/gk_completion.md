@@ -17,6 +17,12 @@ gk completion [bash|zsh|fish|powershell] [flags]
   -i, --install   Installs the script in your terminal
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk](gk.md)	 - GitKraken CLI

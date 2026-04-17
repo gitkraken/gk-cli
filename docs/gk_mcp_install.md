@@ -38,6 +38,12 @@ gk mcp install --list
   -l, --list               List all supported MCP clients and detect which are installed
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk mcp](gk_mcp.md)	 - Start a local MCP server for your favorite MCP client to interact with

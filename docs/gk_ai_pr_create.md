@@ -19,6 +19,12 @@ gk ai pr create [flags]
   -p, --path string   (Optional) Repository path
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk ai pr](gk_ai_pr.md)	 - Use AI to manage your PRs

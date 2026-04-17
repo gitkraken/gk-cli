@@ -16,6 +16,12 @@ starting work on code, committing changes, PR management, and more.
   -h, --help   help for work
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk](gk.md)	 - GitKraken CLI

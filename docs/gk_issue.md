@@ -14,6 +14,12 @@ This command is integrated with your provider issue tracker and provides a conve
   -h, --help   help for issue
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk](gk.md)	 - GitKraken CLI

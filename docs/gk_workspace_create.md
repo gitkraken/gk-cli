@@ -33,6 +33,12 @@ gk workspace create [flags]
       --root-path string           Root directory where all subdirectories will be added to the workspace (default "r")
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk workspace](gk_workspace.md)	 - Interact with your workspaces. Alias: 'ws'

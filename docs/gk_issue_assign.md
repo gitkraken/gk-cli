@@ -33,6 +33,12 @@ gk issue assign [flags]
   -r, --repo-name string           Set the name of the repository
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk issue](gk_issue.md)	 - Manage your issues

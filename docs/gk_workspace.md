@@ -17,6 +17,12 @@ to execute operations across multiple repositories simultaneously.
   -h, --help   help for workspace
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk](gk.md)	 - GitKraken CLI

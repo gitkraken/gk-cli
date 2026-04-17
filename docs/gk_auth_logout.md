@@ -16,6 +16,12 @@ gk auth logout [flags]
   -h, --help   help for logout
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk auth](gk_auth.md)	 - Authenticate with the GitKraken platform

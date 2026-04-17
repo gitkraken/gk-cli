@@ -34,6 +34,12 @@ gk mcp config vscode --source=gitlens --scheme=vscode
       --source string      Indicates the source from where the MCP server is installed, e.g. 'gitlens'
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk mcp](gk_mcp.md)	 - Start a local MCP server for your favorite MCP client to interact with

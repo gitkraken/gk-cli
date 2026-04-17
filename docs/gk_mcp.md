@@ -32,6 +32,12 @@ gk mcp --readonly
   -r, --readonly       Run the MCP server in read-only mode, only allowing read operations.
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk](gk.md)	 - GitKraken CLI

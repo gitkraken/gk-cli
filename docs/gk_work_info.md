@@ -27,6 +27,12 @@ gk work info [flags]
   -h, --help   help for info
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk work](gk_work.md)	 - Interact with your work. Alias: 'w'

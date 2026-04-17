@@ -33,6 +33,12 @@ gk work pr create [flags]
   -t, --title string   Title of the pull request to be created. If empty, the name of the work item will be used.
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk work pr](gk_work_pr.md)	 - Manage your PR

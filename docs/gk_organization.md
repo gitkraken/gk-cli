@@ -14,6 +14,12 @@ This command allows you to list your gitkraken organizations and set the default
   -h, --help   help for organization
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk](gk.md)	 - GitKraken CLI

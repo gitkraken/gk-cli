@@ -16,7 +16,8 @@ gk [flags]
 ### Options
 
 ```
-  -h, --help   help for gk
+  -h, --help           help for gk
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
 ```
 
 ### SEE ALSO

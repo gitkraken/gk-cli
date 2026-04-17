@@ -14,6 +14,12 @@ Use this command to create, review and manage your PRs with AI.
   -h, --help   help for pr
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk ai](gk_ai.md)	 - Use AI in the CLI

@@ -17,6 +17,12 @@ gk auth login [flags]
   -t, --token string   (Optional) Login token
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk auth](gk_auth.md)	 - Authenticate with the GitKraken platform

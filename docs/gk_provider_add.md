@@ -30,6 +30,12 @@ gk provider add [flags]
       --url string                 Instance URL for self-managed providers
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk provider](gk_provider.md)	 - Add or remove provider tokens

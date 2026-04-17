@@ -25,6 +25,12 @@ gk issue list [flags]
       --json   Output as JSON
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk issue](gk_issue.md)	 - Manage your issues

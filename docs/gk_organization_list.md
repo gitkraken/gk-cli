@@ -22,6 +22,12 @@ gk organization list [flags]
   -h, --help   help for list
 ```
 
+### Options inherited from parent commands
+
+```
+      --no-telemetry   Disable telemetry (OTel spans, Sentry) for this invocation
+```
+
 ### SEE ALSO
 
 * [gk organization](gk_organization.md)	 - Manage your Gitkraken organizations
