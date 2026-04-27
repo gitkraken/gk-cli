@@ -1,0 +1,29 @@
+# JVM Crash Logs
+hs_err_pid*.log
+crash_*.log
+
+# IDE & Editor
+.vscode/mcp.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build & Dependency
+target/
+build/
+.gradle/
+*.jar
+*.zip
+*.tar.gz
+
+# Runtime & Logs
+*.log
+logs/
+tmp/
+
+# OS
+Thumbs.db
+.env.local
+.env.*.local
