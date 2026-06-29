@@ -1,29 +1,28 @@
-## gk provider set
+## gk provider primary
 
-Set your default providers
+Set the primary connection for a provider. The primary is used by default when no connection is specified.
 
 ### Synopsis
 
-
-  This command allows you to set your default issue and git providers. Available providers: azure, bitbucket, github, gitlab, jira, linear, trello
-
+Set the primary connection for a provider. The primary is used by default when no connection is specified.
 
 ```
-gk provider set [flags]
+gk provider primary [flags]
 ```
 
 ### Examples
 
 ```
-  provider set -i <provider> -g <provider>
+
+  gk provider primary github <tokenId>
+  gk provider primary github <tokenId> --json
 ```
 
 ### Options
 
 ```
-  -g, --git string     Set your default git provider
-  -h, --help           help for set
-  -i, --issue string   Set your default issue provider
+  -h, --help   help for primary
+      --json   Output as JSON
 ```
 
 ### Options inherited from parent commands
