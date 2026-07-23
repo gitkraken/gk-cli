@@ -182,6 +182,7 @@ feedback emit · ⚠️ accepted legacy or caveat.
 | `select_target_branch` | Target branch chosen | host, tool_name | ✅ | `:953` |
 | `collapse` / `expand` | Header toggle | host | ✅ | `:1102` |
 | `expand_range` / `collapse_range` | Commit range toggled | host | ✅ | `:921` |
+| `commit_expand` / `commit_collapse` | Individual commit details toggled | host | ✅ | commit rows |
 | `feedback_start` | Thumbs up/down | host, sentiment | ✅ | `:1295`/`:1300` |
 | `feedback_dismiss` | Feedback form dismissed without submit | host, sentiment | ✅ | feedback composer cancel |
 | `feedback` | Feedback submitted | sentiment, has_comment, comment | ✅ server | `app_feedback` handler |
@@ -192,6 +193,7 @@ feedback emit · ⚠️ accepted legacy or caveat.
 | `pull` | Pull clicked | host, tool_name | ✅ derived | `submitPull` `:999` → `git_pull` |
 | `pull_result` | Pull completed or failed | host, tool_name, outcome, duration_ms, error_code | ✅ | `submitPull` outcome callback |
 | `open_in_gitlens` | "Open in GitLens" | host, tool_name | ✅ derived | `openInGitLens` `:1017` |
+| `open_diff` / `open_file` / `open_in_explorer` | Commit file actions | host, tool_name | ✅ derived | expanded commit file rows |
 
 ### 2d. Git Resolve (`app_name: git_resolve`)
 
@@ -209,8 +211,8 @@ feedback emit · ⚠️ accepted legacy or caveat.
 | `resolve_apply_result` | Apply completed or failed | host, outcome, duration_ms, error_code, result_count, applied_count, remaining_count | ✅ | `applySession` |
 | `resolve_discard` | Discard resolutions | host | ✅ | `:742` |
 | `resolve_file_open_diff` | Open AI-vs-conflict diff | host | ✅ | `:493` |
-| `open_file` | Open conflicted file in editor | host | ✅ | generic dispatcher `:459` |
-| `open_in_explorer` | Reveal in file explorer | host | ✅ | generic dispatcher `:459` |
+| `open_file` | Open conflicted file in editor | host, tool_name | ✅ derived | shared file-action controller |
+| `open_in_explorer` | Reveal in file explorer | host, tool_name | ✅ derived | shared file-action controller |
 | `ai_model_set` | AI model changed | host, feature=`resolve`, model_id | ✅ | `:1017`/`:1038` |
 | `feedback_start` | Thumbs up/down | host, sentiment | ✅ | `:1067`/`:1072` |
 | `feedback_dismiss` | Feedback form dismissed without submit | host, sentiment | ✅ | feedback composer cancel |
@@ -240,7 +242,7 @@ feedback emit · ⚠️ accepted legacy or caveat.
 | `range_expand` / `range_collapse` | History commit node toggled | host | ✅ | history panel |
 | `compose_range_apply_confirm` | User confirmed branch rewrite for a range plan | host | ✅ | range apply confirmation |
 | `open_in_gitlens` | Open in GitLens | host | ✅ | `:1206` |
-| `open_diff` / `open_file` / `open_in_explorer` | File actions | host | ✅ | generic dispatcher `:1146` |
+| `open_diff` / `open_file` / `open_in_explorer` | File actions | host, tool_name | ✅ derived | shared file-action controller |
 | `collapse` / `expand` | Header toggle | host | ✅ | `:1610` |
 | `ai_model_set` | AI model changed | host, feature=`compose`, model_id | ✅ | `:1689` |
 | `feedback_start` | Thumbs up/down | host, sentiment | ✅ | `:1723`/`:1728` |
@@ -321,7 +323,7 @@ load → open_diff | open_file | open_in_explorer   ✅ server-derived
 
 **Flow A — Explore**
 ```
-load → refresh → expand_range/collapse_range → select_target_branch → collapse/expand
+load → refresh → expand_range/collapse_range → commit_expand/commit_collapse → select_target_branch → collapse/expand
 ```
 Fully observable.
 
@@ -336,6 +338,14 @@ load → pull → pull_result   ✅ server-derived intent + UI-observed outcome
 load → switch_to_status                     ✅
 load → open_in_gitlens                      ✅ server-derived
 ```
+
+**Flow D — Inspect a commit file**
+```
+load → commit_expand → open_diff | open_file | open_in_explorer   ✅ server-derived
+```
+`open_diff` compares the selected commit with its first parent; root commits
+compare against an empty file. File paths and commit IDs are not retained in
+interaction telemetry.
 
 ### Git Resolve
 
@@ -390,7 +400,7 @@ events.
 ```
 load → compose_prepare_start → open_diff|open_file|open_in_explorer → open_in_gitlens → compose_apply
 ```
-Fully observable (Composer is the only view with file-action telemetry wired).
+Fully observable; generic file-action intents are derived from toolbox calls.
 
 **Flow C — Gate**
 ```
@@ -447,8 +457,8 @@ remains accepted for historical compatibility. Feedback form cancellation emits
 are bounded to 20 entries per app and expire after 30 seconds.
 
 ### Intentional limits
-- Status/Graph git intents and Status file actions remain server-derived from
-  toolbox calls; the client does not emit duplicate intent events for those.
+- Status/Graph git intents and generic file actions in every overview pane are
+  server-derived from toolbox calls; clients do not emit duplicate intents.
 - Status `commit_request_result` is only prompt/request dispatch telemetry; it
   is not an actual git commit outcome.
 - File paths remain excluded from all interaction telemetry payloads.
@@ -469,6 +479,6 @@ are bounded to 20 entries per app and expire after 30 seconds.
 | View | Emitted | Remaining limits | Notable outcome semantics |
 |------|---------|------------------|----------------------|
 | Status | load, refresh, sync/sync_result, commit/commit_request_result, generate_commit_message/generate_commit_message_result, ai_model_set, stage_all_and_commit, collapse/expand, feedback_start/feedback/feedback_dismiss, switch/gate/gate_*_click/gate_*_success, push/pull/fetch result events plus server-derived stage/stash/open actions | — | quick commit result is request dispatch only; commit generation result is UI-observed |
-| Graph | load, refresh, select_target_branch, (collapse/expand)(_range), feedback_start/feedback/feedback_dismiss, switch_to_status, gate/gate_*_click/gate_*_success, push/pull result events plus server-derived open_in_gitlens | — | result events are UI-observed completion only |
+| Graph | load, refresh, select_target_branch, (collapse/expand)(_range), feedback_start/feedback/feedback_dismiss, switch_to_status, gate/gate_*_click/gate_*_success, push/pull result events plus server-derived open_in_gitlens and file actions | — | result events are UI-observed completion only |
 | Resolve | load, refresh, switch_to_resolve, resolve_prepare_start/ready/error/cancel, resolve_file_retry, resolve_apply/result, resolve_discard, resolve_file_open_diff, open_file, open_in_explorer, ai_model_set, feedback_start/feedback/feedback_dismiss, gate/gate_*_click/gate_*_success | — | result events are UI-observed completion only |
 | Composer | load, refresh, switch_to_compose/status, view_graph, compose_prepare_start/ready/error/cancel, compose_reset_plan, recompose accepted legacy, compose_apply/result, range_select/clear/expand/collapse, compose_range_apply_confirm, open_in_gitlens, open_diff/file/explorer, collapse/expand, ai_model_set, feedback_start/feedback/feedback_dismiss, gate/gate_*_click/gate_*_success | — | result events are UI-observed completion only |
