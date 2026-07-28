@@ -1,5 +1,7 @@
 # 🚀 GitKraken CLI
 
+[![MCP Toplist](https://mcptoplist.com/badge/com.gitkraken%2Fgk-cli.svg)](https://mcptoplist.com/server/com.gitkraken%2Fgk-cli)
+
 `gk` is GitKraken on the command line. The core functionality is focused on "Work Items" which can be thought of as the feature or issue you are trying to tackle. This allows you to work with multiple repos at once and get the same UX as if you were in a monorepo. We also provide robust AI-powered commit messages and Pull Request generation. It also provides an MCP server that streamlines working with git and your Issue and git hosting providers.
 
 GitKraken CLI is available on macOS, Windows, and Unix systems.
