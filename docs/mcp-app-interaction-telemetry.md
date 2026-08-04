@@ -1,8 +1,8 @@
 # MCP App Interaction Telemetry
 
 Reference for every interaction event emitted by the MCP embedded UI apps (Git
-Status, Git Graph, Git Resolve, Commit Composer), the user flows that trigger
-them, and the remaining intentional telemetry limits.
+Status, Git Graph, Git Resolve, Commit Composer, Launchpad), the user flows that
+trigger them, and the remaining intentional telemetry limits.
 
 > Source of truth:
 > - UI schemas / field whitelisting: [`git_app_telemetry.js`](../internal/mcp/internal/ui/src/git_app_telemetry.js)
@@ -10,6 +10,29 @@ them, and the remaining intentional telemetry limits.
 > - Emit plumbing: [`git_overview_actions.ts`](../internal/mcp/internal/ui/src/git_overview_actions.ts) (`trackAppInteraction`, `executeAppToolBoxAction`)
 > - Lifecycle beacons: [`lifecycle_telemetry.ts`](../internal/mcp/internal/ui/src/lifecycle_telemetry.ts)
 > - Cross-view / gate emits: [`git_overview.tsx`](../internal/mcp/internal/ui/src/git_overview.tsx)
+> - Launchpad view emits: [`launchpad.tsx`](../internal/mcp/internal/ui/src/launchpad.tsx)
+
+---
+
+## 0. Registering a new app
+
+**This app list is expected to keep growing.** Whenever a new tool, UI, or MCP
+app is added, it MUST be registered for telemetry — there is no implicit
+coverage. Concretely, adding an app means:
+
+1. Add its identifier to `knownAppNames` in
+   [`app_telemetry.go`](../internal/mcp/internal/tools/app_telemetry.go) and give
+   it a `case` in `sanitizeAppInteractionTelemetryData`. Without both, the
+   backend rejects the app's interaction and feedback telemetry at the tool
+   boundary.
+2. Resolve it in `resolveOverviewApp`
+   ([`git_overview_app_metadata.js`](../internal/mcp/internal/ui/src/git_overview_app_metadata.js))
+   so the shell can attribute lifecycle and interaction events to it.
+3. Add a catalog section and coverage-table row to this document.
+
+Adding the name to `knownAppNames` also auto-enrolls the app in
+`TestAppToolBoxHandlerRoundTripsAppFeedbackForEveryKnownApp`, so a missing
+feedback sanitizer case fails the build.
 
 ---
 
@@ -20,7 +43,7 @@ with `action: 'interaction_telemetry'` and the payload:
 
 ```jsonc
 {
-  "app_name":    "git_status | git_graph | git_resolve | git_commit_composer",
+  "app_name":    "git_status | git_graph | git_resolve | git_commit_composer | launchpad",
   "interaction": "<action name>",   // e.g. "compose_prepare_start", "switch_to_graph"
   "data":        "<JSON string>",   // whitelisted fields only (see below)
   "directory":   "<repo path>"      // omitted for lifecycle beacons
@@ -252,6 +275,43 @@ feedback emit · ⚠️ accepted legacy or caveat.
 | `gate_login_click` / `gate_start_trial_click` / `gate_upgrade_click` | Gate CTAs | host, variant | ✅ | inline gate (`git_overview_auth_gate.ts`) |
 | `gate_login_success` / `gate_start_trial_success` / `gate_upgrade_success` | Compose gate conversions (sign-in / trial / purchase) | host, variant | ✅ | `git_overview_auth_gate.ts:91` (`applyUserStatusResponse`) |
 
+### 2f. Launchpad (`app_name: launchpad`)
+
+Launchpad renders as a pane inside the `git_overview` shell (experimental). Its
+view intents and result interactions are **client-emitted** through
+`trackAppInteraction` in
+[`launchpad.tsx`](../internal/mcp/internal/ui/src/launchpad.tsx); it has no
+server-derived toolbox intents (unlike Status/Graph git actions) and no
+unlicensed-gate funnel (availability is backend-advertised, see §4). Submitted
+feedback is handled server-side, while lifecycle `app_loaded` / `render_error`
+events are fired by the shell when Launchpad is the launched view, like every
+other pane.
+
+| Interaction | When | `data` | Fires? | Call site |
+|-------------|------|--------|--------|-----------|
+| `load` | View becomes visible & resolves a directory | host, tool_name, outcome, duration_ms, error_code, pull_request_count, issue_count | ✅ | `launchpad.tsx` |
+| `refresh` | User clicks Refresh | host, tool_name, outcome, duration_ms, error_code, pull_request_count, issue_count | ✅ | `launchpad.tsx` |
+| `tab_select` | User switches the PRs/Issues tab | host, tab | ✅ | `launchpad.tsx` |
+| `group_toggle` | Category group expanded/collapsed | host, group, expanded | ✅ | `launchpad.tsx` |
+| `filter_change` | Filter applied to the current tab | host, filter, tab, count | ✅ | `launchpad.tsx` |
+| `open_item` | Open a PR/issue (provider page, PR changes, or Review Changes) | host, category, provider | ✅ | `launchpad.tsx` |
+| `open_item_result` | Open-changes / Review-Changes action completed or failed | host, category, provider, outcome, duration_ms, error_code, open_verified | ✅ | `openChanges` / `reviewChanges` |
+| `start_review` | "Start Review" on a PR | host, category, provider | ✅ | `launchpad.tsx` |
+| `start_review_result` | Start-review completed or failed | host, category, provider, outcome, duration_ms, error_code | ✅ | `startReview` outcome callback |
+| `start_work` | "Start Work" on an issue | host, category, provider | ✅ | `launchpad.tsx` |
+| `start_work_result` | Start-work completed or failed | host, category, provider, outcome, duration_ms, error_code | ✅ | `startWork` outcome callback |
+| `switch_to_launchpad` | Entered Launchpad from another pane | host | ✅ | `git_overview.tsx` |
+| `switch_to_status` / `back` | Leave Launchpad | host | ✅ | `launchpad.tsx` / shell |
+| `collapse` / `expand` | Header collapse toggle | host | ✅ | `launchpad.tsx` |
+| `feedback_start` | Thumbs up/down clicked | host, sentiment | ✅ | `launchpad.tsx` |
+| `feedback_dismiss` | Feedback form dismissed without submit | host, sentiment | ✅ | `launchpad.tsx` |
+| `feedback` | Feedback submitted | sentiment, has_comment, comment | ✅ server | `app_feedback` handler |
+| `app_loaded` / `render_error` | Lifecycle (when Launchpad is the launched view) | host (+ error fields) | ✅ | shell (`git_overview.tsx`) |
+
+Item content (titles, URLs, repository names, issue bodies) is never forwarded —
+only the whitelisted `category`/`provider` identifiers and outcome fields
+survive sanitization (`sanitizeLaunchpadInteractionTelemetryData`).
+
 ---
 
 ## 3. User flows & funnels
@@ -415,6 +475,35 @@ load → view_graph        (→ Graph)
 load → switch_to_status  (→ Status)
 ```
 
+### Launchpad
+
+**Flow A — Triage → open**
+```
+switch_to_launchpad → load → tab_select | filter_change | group_toggle
+→ open_item → open_item_result
+```
+`load`/`refresh` carry `pull_request_count` and `issue_count` for volume, plus
+`outcome`/`duration_ms`/`error_code`. `open_item_result` reports the outcome of
+the open-changes / Review-Changes toolbox action. Its `open_verified` field is
+false when Review Changes has to use the browser fallback, whose non-throwing
+result cannot distinguish a successful `noopener` open from a popup block. A
+plain "open on provider" link fires only `open_item`: a definite failure is
+shown in the UI, but the browser path has no reliable success signal.
+
+**Flow B — Act on an item**
+```
+… → start_review → start_review_result      (pull request)
+… → start_work   → start_work_result        (issue)
+```
+Result events carry `outcome`, `duration_ms`, a normalized `error_code` on
+failure, and the `category`/`provider` of the item acted on.
+
+**Flow C — Leave / feedback**
+```
+load → back | switch_to_status
+load → feedback_start(positive|negative) → feedback | feedback_dismiss
+```
+
 ---
 
 ## 4. Recently closed gaps and remaining limits
@@ -471,6 +560,18 @@ are bounded to 20 entries per app and expire after 30 seconds.
   inferred from the first `user_status` refresh that reads as paid. A user who
   buys but never returns to the app (or whose license lands via some other path)
   will not produce it.
+- **Launchpad intents are client-emitted, not server-derived.** Unlike the
+  Status/Graph git actions, Launchpad's `open_item` / `start_review` /
+  `start_work` are emitted from `launchpad.tsx`, not derived from the toolbox
+  call in `deriveAppToolBoxInteraction`. The paired `*_result` events carry the
+  observed outcome.
+- **Launchpad has no unlicensed-gate funnel.** Availability is backend-advertised
+  (`launchpadAvailable`, gated on the experimental flag and successful Launchpad
+  UI resource registration); when unavailable the pane and its "View Launchpad"
+  entry points are simply not rendered, so there are no `gate_*` events. If the
+  experimental flag is on but the Launchpad HTML shell is absent from the build,
+  registration emits `not_registered` with reason `launchpad_ui_missing` so the
+  skip is observable rather than silent.
 
 ---
 
@@ -482,3 +583,4 @@ are bounded to 20 entries per app and expire after 30 seconds.
 | Graph | load, refresh, select_target_branch, (collapse/expand)(_range), feedback_start/feedback/feedback_dismiss, switch_to_status, gate/gate_*_click/gate_*_success, push/pull result events plus server-derived open_in_gitlens and file actions | — | result events are UI-observed completion only |
 | Resolve | load, refresh, switch_to_resolve, resolve_prepare_start/ready/error/cancel, resolve_file_retry, resolve_apply/result, resolve_discard, resolve_file_open_diff, open_file, open_in_explorer, ai_model_set, feedback_start/feedback/feedback_dismiss, gate/gate_*_click/gate_*_success | — | result events are UI-observed completion only |
 | Composer | load, refresh, switch_to_compose/status, view_graph, compose_prepare_start/ready/error/cancel, compose_reset_plan, recompose accepted legacy, compose_apply/result, range_select/clear/expand/collapse, compose_range_apply_confirm, open_in_gitlens, open_diff/file/explorer, collapse/expand, ai_model_set, feedback_start/feedback/feedback_dismiss, gate/gate_*_click/gate_*_success | — | result events are UI-observed completion only |
+| Launchpad | load, refresh (both with pull_request_count/issue_count + outcome), tab_select, group_toggle, filter_change, open_item/open_item_result, start_review/result, start_work/result, switch_to_launchpad/switch_to_status/back, collapse/expand, feedback_start/feedback/feedback_dismiss, lifecycle app_loaded/render_error | no gate funnel (availability is backend-advertised); intents client-emitted, not server-derived | result events are UI-observed completion only; item content never forwarded |
