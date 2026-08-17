@@ -5,12 +5,12 @@ Status, Git Graph, Git Resolve, Commit Composer, Launchpad), the user flows that
 trigger them, and the remaining intentional telemetry limits.
 
 > Source of truth:
-> - UI schemas / field whitelisting: [`git_app_telemetry.js`](../internal/mcp/internal/ui/src/git_app_telemetry.js)
+> - UI schemas / field whitelisting: [`git_app_telemetry.js`](../internal/mcp/internal/ui/src/shared/git_app_telemetry.js)
 > - Server sanitizers / derived events: [`app_telemetry.go`](../internal/mcp/internal/tools/app_telemetry.go)
-> - Emit plumbing: [`git_overview_actions.ts`](../internal/mcp/internal/ui/src/git_overview_actions.ts) (`trackAppInteraction`, `executeAppToolBoxAction`)
-> - Lifecycle beacons: [`lifecycle_telemetry.ts`](../internal/mcp/internal/ui/src/lifecycle_telemetry.ts)
+> - Emit plumbing: [`git_overview_actions.ts`](../internal/mcp/internal/ui/src/overview/git_overview_actions.ts) (`trackAppInteraction`, `executeAppToolBoxAction`)
+> - Lifecycle beacons: [`lifecycle_telemetry.ts`](../internal/mcp/internal/ui/src/app/lifecycle_telemetry.ts)
 > - Cross-view / gate emits: [`git_overview.tsx`](../internal/mcp/internal/ui/src/git_overview.tsx)
-> - Launchpad view emits: [`launchpad.tsx`](../internal/mcp/internal/ui/src/launchpad.tsx)
+> - Launchpad view emits: [`launchpad.tsx`](../internal/mcp/internal/ui/src/launchpad/launchpad.tsx)
 
 ---
 
@@ -26,7 +26,7 @@ coverage. Concretely, adding an app means:
    backend rejects the app's interaction and feedback telemetry at the tool
    boundary.
 2. Resolve it in `resolveOverviewApp`
-   ([`git_overview_app_metadata.js`](../internal/mcp/internal/ui/src/git_overview_app_metadata.js))
+   ([`git_overview_app_metadata.js`](../internal/mcp/internal/ui/src/overview/git_overview_app_metadata.js))
    so the shell can attribute lifecycle and interaction events to it.
 3. Add a catalog section and coverage-table row to this document.
 
@@ -280,7 +280,7 @@ feedback emit · ⚠️ accepted legacy or caveat.
 Launchpad renders as a pane inside the `git_overview` shell (experimental). Its
 view intents and result interactions are **client-emitted** through
 `trackAppInteraction` in
-[`launchpad.tsx`](../internal/mcp/internal/ui/src/launchpad.tsx); it has no
+[`launchpad.tsx`](../internal/mcp/internal/ui/src/launchpad/launchpad.tsx); it has no
 server-derived toolbox intents (unlike Status/Graph git actions) and no
 unlicensed-gate funnel (availability is backend-advertised, see §4). Submitted
 feedback is handled server-side, while lifecycle `app_loaded` / `render_error`
