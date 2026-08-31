@@ -5,7 +5,7 @@ Show list of pull requests assigned to you
 ### Synopsis
 
 
-  This command lists the open pull requests where you are the author or assignee. Pass --closed to list closed/merged pull requests instead of open ones. Pass --reviewer to also include pull requests where you are a requested reviewer. Available providers: github, github_enterprise, gitlab, gitlab_self_hosted, bitbucket, bitbucket_server, azure. Use --org/--project/--repo to target a specific repository explicitly (--project is required for Azure). Without those flags, Bitbucket and Azure first try to detect the repository from the current working directory's origin remote; if the cwd is not a matching clone, they fall back to listing your PRs across every accessible Bitbucket workspace or Azure DevOps organization. Repo-scoped listings already surface PRs you might review, so --reviewer is ignored for those providers.
+  This command lists the open pull requests where you are the author or assignee. Pass --closed to list closed/merged pull requests instead of open ones. Pass --reviewer to also include pull requests where you are a requested reviewer. Available providers: github, github_enterprise, gitlab, gitlab_self_hosted, bitbucket, bitbucket_server, azure. Use --org/--project/--repo to target a specific repository explicitly (--project is required for Azure). Without those flags, bitbucket, bitbucket_server and azure first try to detect the repository from the current working directory's origin remote. When the cwd is not a matching clone, bitbucket and azure fall back to listing your PRs across every accessible Bitbucket Cloud workspace or Azure DevOps organization; bitbucket_server has no cross-project fallback, so outside a matching clone it requires --org (the project key) and --repo. Repo-scoped listings already surface PRs you might review, so --reviewer is ignored for those providers.
 
   Pass --all-involvement (with --org/--repo, plus --project for Azure) to list every pull request in the target repository regardless of who authored, is assigned to or is requested to review it. It cannot be combined with --all, and --reviewer is ignored when it is set.
 
@@ -26,6 +26,7 @@ Show list of pull requests assigned to you
     gk pr list github --all-pages --with-branches --json
     gk pr list bitbucket
     gk pr list bitbucket --org myws --repo myrepo
+    gk pr list bitbucket_server --org PROJ --repo myrepo
     gk pr list azure --org myorg --project myproj --repo myrepo
     gk pr list github --org gitkraken --repo gkcli --all-involvement
     gk pr list --all --output json
@@ -44,20 +45,20 @@ gk pr list [flags]
 ### Options
 
 ```
-      --all                           Fetch pull requests from all configured git providers
-      --all-involvement               List every pull request in the target repo regardless of involvement (requires --org/--repo, plus --project for Azure)
-      --all-pages                     Fetch every page and return the complete set (all providers; cannot be combined with --page)
-      --closed                        List closed/merged pull requests instead of open ones
-      --connection gk provider list   Scope the listing to a single connection by its tokenId (see gk provider list)
-      --fields string                 Comma-separated list of fields to keep in JSON output (e.g. id,title,state); requires --output json
-  -h, --help                          help for list
-      --org string                    Organization or workspace name to scope listing to (skips cwd detection)
-      --page int                      Page number (1-indexed) when paging through pull requests. Pages past the end return empty results. (default 1)
-      --project string                Azure DevOps project name (required with --org/--repo for Azure)
-      --repo string                   Repository name to scope listing to (use with --org)
-      --reviewer                      Also include pull requests where you are a requested reviewer (supported by every cloud git provider)
-  -s, --sync                          Bypass the local cache and force a fresh fetch from the provider
-      --with-branches                 Include head/base branch names (GitHub performs one extra API call per PR)
+      --all                 Fetch pull requests from all configured git providers
+      --all-involvement     List every pull request in the target repo regardless of involvement (requires --org/--repo, plus --project for Azure)
+      --all-pages           Fetch every page and return the complete set (all providers; cannot be combined with --page)
+      --closed              List closed/merged pull requests instead of open ones
+      --connection string   Scope the listing to a single connection by its tokenId (see 'gk provider list')
+      --fields string       Comma-separated list of fields to keep in JSON output (e.g. id,title,state); requires --output json
+  -h, --help                help for list
+      --org string          Organization or workspace name to scope listing to (skips cwd detection)
+      --page int            Page number (1-indexed) when paging through pull requests. Pages past the end return empty results. (default 1)
+      --project string      Azure DevOps project name (required with --org/--repo for Azure)
+      --repo string         Repository name to scope listing to (use with --org)
+      --reviewer            Also include pull requests where you are a requested reviewer (supported by every cloud git provider)
+  -s, --sync                Bypass the local cache and force a fresh fetch from the provider
+      --with-branches       Include head/base branch names (GitHub performs one extra API call per PR)
 ```
 
 ### Options inherited from parent commands
@@ -72,4 +73,4 @@ gk pr list [flags]
 
 * [gk pr](gk_pr.md)	 - Manage your pull requests
 
-###### Auto generated by spf13/cobra on 17-Aug-2026
+###### Auto generated by spf13/cobra on 31-Aug-2026

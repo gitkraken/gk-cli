@@ -566,12 +566,10 @@ are bounded to 20 entries per app and expire after 30 seconds.
   call in `deriveAppToolBoxInteraction`. The paired `*_result` events carry the
   observed outcome.
 - **Launchpad has no unlicensed-gate funnel.** Availability is backend-advertised
-  (`launchpadAvailable`, gated on the experimental flag and successful Launchpad
-  UI resource registration); when unavailable the pane and its "View Launchpad"
-  entry points are simply not rendered, so there are no `gate_*` events. If the
-  experimental flag is on but the Launchpad HTML shell is absent from the build,
-  registration emits `not_registered` with reason `launchpad_ui_missing` so the
-  skip is observable rather than silent.
+  through the boot payload's `capabilities.views`, which lists Launchpad only in
+  experimental builds that also wired a pull-request or assigned-issue backend;
+  when unavailable the pane and its "View Launchpad" entry points are simply not
+  rendered, so there are no `gate_*` events.
 
 ---
 
