@@ -47,7 +47,7 @@ unselected conflicts, handled spaces and Unicode in a path, treated partial
 apply as incomplete, and explained the rebase caveat for ours/theirs.
 
 Both runs had to supply their own stdout redirection because the briefing's
-step 1 used `--output json`, which saves nothing, while steps 3 and 4 consumed
+step 1 used `--json`, which saves nothing, while steps 3 and 4 consumed
 a plan path. The workflow now names `--plan-file` in step 1, so re-run this
 evaluation against the corrected briefing before release and record whether
 agents still reach for a redirect.

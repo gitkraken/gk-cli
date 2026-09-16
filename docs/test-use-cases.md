@@ -85,7 +85,7 @@ Using CW:
 3. Confirm staged, unstaged, and untracked content is represented and the
    mixed file can be split at hunk level.
 4. Run
-   `gk ai compose apply-plan <private-temp-file> --workdir <CW> --output json`;
+   `gk ai compose apply-plan <private-temp-file> --workdir <CW> --json`;
    do not call AI again. If commands run outside CW, retaining the identical
    `--workdir` is part of the saved-plan contract.
 5. Verify commit order and contents, report `undoId`, and retain it for C6.
@@ -448,13 +448,19 @@ list/get/archive/remove. Listing and installing are separate commands, so assert
 selected list fields against `ai skill list` and installation behavior against
 `ai skill install`.
 
-For skills, assert `--output=json` and `GK_OUTPUT=json`, matching-file no-op
-behavior, modified-file protection, and `--force` replacement. Dry-run needs two
-cases, because it validates rather than only previewing: over a clean or matching
-target it reports exact targets/actions, creates no directories or files, and
-exits 0; over a modified target it still reports the plan but exits non-zero with
-`invalid_request`, the same refusal the install itself would return. A dry-run
-asserted only for exit 0 would pass against a build that cannot install at all.
+For skills, assert `--json` and `GK_OUTPUT=json`, matching-file no-op
+behavior, modified-file protection, and `--force` replacement. Cover `--skill`
+selection for install, plus `ai skill uninstall`: it is idempotent when selected
+skills are absent, refuses changed `SKILL.md` files unless `--force` is passed,
+and exposes partial mutation state in the JSON error envelope's `details`
+field; a follow-up JSON `ai skill list` can verify the resulting installed set.
+Dry-run needs two cases, because it validates rather than only previewing: over
+a clean or matching target it reports exact targets/actions, creates no
+directories or files, and exits 0; over a modified target it exits non-zero
+with `invalid_request`, leaves JSON stdout empty, and carries the rejected plan
+in the single stderr error envelope's `details`, the same refusal the install
+itself would return. A dry-run asserted only for exit 0 would pass against a
+build that cannot install at all.
 
 Validate other client names through install-plan/config tests. Treat `hook run`
 as host-driven and exercise it with a fixture event rather than invoking it as a

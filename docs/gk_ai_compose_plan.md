@@ -11,7 +11,7 @@ repository is modified.
 By default, plan reads all staged, unstaged and untracked working-tree changes
 and plans commits for the current HEAD. Its normal output is a human summary:
 one line per proposed commit with its subject, file count and line counts. Use
---output json when a program needs the complete plan on stdout.
+--json when a program needs the complete plan on stdout.
 
 Costs AI tokens.
 
@@ -48,7 +48,7 @@ CHANGE SELECTION
                          Brace {a,b} and bracket [abc] groups are NOT supported.
 
   On plan, filters are preview-only: they cannot be combined with --plan-file
-  or replayed through apply-plan. Use --output json when you need the complete
+  or replayed through apply-plan. Use --json when you need the complete
   filtered plan. To apply the same selection, run apply with the same filters;
   apply performs fresh AI analysis, so its grouping may differ.
 
@@ -94,6 +94,22 @@ PLANNING CONTROLS
       With --target auto, biases toward fewer or more stacked sub-branches
       inside each planned branch.
 
+MODEL SELECTION
+
+  --model <id> selects a model for this invocation only; it does not change
+  saved provider settings. Without it, Compose uses the active provider's
+  configured model, or the GitKraken backend default when no override is set.
+
+  Run "gk ai provider show" to inspect the active provider and configured
+  model. For GitKraken-hosted AI, "gk ai models" lists available ids and marks
+  the backend default with *. With the GitKraken provider, --model "" bypasses
+  a saved global override once and uses the backend default.
+
+  plan, apply, split plan and split accept --model because they call AI.
+  apply-plan and undo make no AI request and do not accept it. A later split
+  re-runs AI, so repeat the same --model used for split plan when consistency
+  matters.
+
 SAVING AND APPLYING A PLAN
 
 Save the complete plan with --plan-file so a user can review it and you can
@@ -104,13 +120,13 @@ apply that exact plan later without paying to re-plan:
 
 With --plan-file, stdout still receives the human summary and the full JSON is
 written to the file with 0600 permissions. That file holds the same object
-that --output json prints: {plan, source, snapshot, composeSource?,
+that --json prints: {plan, source, snapshot, composeSource?,
 composeTarget?}. Read plan.allOrderedCommits[].message for the proposed commit
 messages and map each commit's .hunkIndices into source.hunks[] to report the
 files and line counts it covers.
 
 Pick one or the other: --plan-file cannot be combined with an explicitly
-requested --output json (or --json), because the file would already contain
+requested --json, because the file would already contain
 it. A session-wide GK_OUTPUT=json is not a conflict — the plan is written to
 the file and printed on stdout. --plan-file also cannot be combined with
 --include or --exclude.
@@ -129,7 +145,7 @@ FILTERED PLAN LIMITATION
 use the saved-plan workflow. To capture the complete filtered result, write
 JSON stdout to a file:
 
-  gk ai compose plan --include 'src/**/*.ts' --output json > /tmp/filtered-preview.json
+  gk ai compose plan --include 'src/**/*.ts' --json > /tmp/filtered-preview.json
 
 That file is for inspection only; do not pass it to apply-plan. To apply the
 same file selection, run apply with the same --include/--exclude flags after
@@ -147,10 +163,11 @@ gk ai compose plan [flags]
 
   gk ai compose plan                                      # summarize a read-only plan
   gk ai compose plan --direction area                     # group by subsystem
+  gk ai compose plan --model <model-id>                   # one-call model override
   gk ai compose plan --direction custom --instructions "keep migrations separate"
   gk ai compose plan --plan-file /tmp/plan.json           # save the full plan
-  gk ai compose plan --output json                         # full plan on stdout
-  gk ai compose plan --include 'src/**' --output json      # complete filtered preview
+  gk ai compose plan --json                         # full plan on stdout
+  gk ai compose plan --include 'src/**' --json      # complete filtered preview
 
 ```
 
@@ -161,11 +178,12 @@ gk ai compose plan [flags]
       --commit-granularity string       Commit size bias: consolidated (fewer/larger), balanced, granular (more/smaller)
       --depth string                    AI analysis depth: quick (lightest), balanced (default), deep (most thorough)
       --direction string                How AI groups work: auto (infer), area (subsystem), type (change type), custom (requires --instructions) (default "auto")
-      --exclude strings                 Glob of files to exclude, matched against the full path (repeatable). Same syntax as --include: *, **, ?; no {a,b} or [abc] groups. With plan, use --output json for the complete filtered result.
+      --exclude strings                 Glob of files to exclude, matched against the full path (repeatable). Same syntax as --include: *, **, ?; no {a,b} or [abc] groups. With plan, use --json for the complete filtered result.
   -h, --help                            help for plan
-      --include strings                 Glob of files to include, matched against the full path (repeatable). Supports * (single path segment), ** (any number of segments, e.g. src/**/*.ts), and ? (single char). Brace {a,b} and bracket [abc] groups are not supported. With plan, use --output json for the complete filtered result.
+      --include strings                 Glob of files to include, matched against the full path (repeatable). Supports * (single path segment), ** (any number of segments, e.g. src/**/*.ts), and ? (single char). Brace {a,b} and bracket [abc] groups are not supported. With plan, use --json for the complete filtered result.
       --instructions string             Additional AI grouping guidance; appended to area/type, or used without a preset for auto/custom
       --merge-target string             Start of the branch-source commit range (default: main)
+      --model string                    AI model id for this invocation (does not change saved settings)
       --no-untracked                    With workdir source, exclude untracked files
       --partition-splitting string      With --target auto, stacked sub-branch count bias: conservative (fewer), balanced, aggressive (more)
       --plan-file string                Write the full plan JSON to this path (plan only; cannot be combined with explicitly requested JSON output, --include, or --exclude)
@@ -183,8 +201,8 @@ gk ai compose plan [flags]
 ### Options inherited from parent commands
 
 ```
+      --json             Emit machine-readable JSON on stdout (GK_OUTPUT=json sets it session-wide)
       --no-telemetry     Disable telemetry (OTel spans, Sentry) for this invocation
-      --output string    Output format: text or json (default "text")
       --session string   (Optional) Isolate auth and cache under a named session
       --workdir string   Path to the git repository to operate on (default: current directory)
 ```
@@ -193,4 +211,4 @@ gk ai compose plan [flags]
 
 * [gk ai compose](gk_ai_compose.md)	 - Plan and create clean, atomic commits from your working tree changes using AI
 
-###### Auto generated by spf13/cobra on 31-Aug-2026
+###### Auto generated by spf13/cobra on 16-Sep-2026

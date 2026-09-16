@@ -7,10 +7,11 @@ unless new commands follow the same rules. Any new **result command** (one that
 reports data or the outcome of a mutation) MUST satisfy this checklist. The
 published contract for consumers lives in the root `AGENTS.md`.
 
-- **Honor the global `--output`.** Do not add a per-command output flag. Read
-  the resolved mode from `config.OutputFormat` (or the `config.JSONOutput()`
-  helper on `actions.Configuration`). The flag is `--output=text|json`, also set
-  via `GK_OUTPUT`, resolved once in `cmd/main.go`.
+- **Honor the global `--json`.** Do not add a per-command JSON flag. Read
+  `config.JSONOutput()` on `actions.Configuration` (or `config.OutputFormat`).
+  `--json` is a persistent root boolean resolved once in `cmd/main.go`;
+  `GK_OUTPUT=json|text` sets it session-wide and `--json=false` forces text
+  back for a single invocation. `--output` was removed and now errors.
 - **One JSON document on stdout.** In JSON mode stdout carries only the data.
   Route every human-facing line (warnings, "no results" notes, progress) to
   `config.Stderr`. Build the payload with `gkio.WriteJSON`; never hand-roll
@@ -19,11 +20,13 @@ published contract for consumers lives in the root `AGENTS.md`.
   startup (`tui.ConfigureColor`) and is off whenever stdout is not a TTY,
   `NO_COLOR`/`CI` is set, or output is JSON. Do not emit raw ANSI yourself.
 - **Structured errors.** Terminal failures are classified by `errors.Classify`
-  and, under JSON, emitted as a single `{"error":{code,message,retryable}}`
-  envelope on stderr by `cmd/main.go`. Return typed CLIErrors
-  (`errors.NewExpectedError` / `NewUnexpectedError`, or the network/auth
-  helpers) so the code and retryable flag map correctly. Do not print error
-  prose yourself in JSON mode.
+  and, under JSON, emitted as a single
+  `{"error":{code,message,retryable,details?}}` envelope on stderr by
+  `cmd/main.go`; stdout stays empty. `details` may carry a rejected preview or
+  partial outcome when callers need machine-readable recovery context. Return
+  typed CLIErrors (`errors.NewExpectedError` / `NewUnexpectedError`, or the
+  network/auth helpers) so the code and retryable flag map correctly. Do not
+  print error prose yourself in JSON mode.
 - **Semantic exit codes.** `0` success, `1` permanent failure
   (auth/validation/internal), `75` (`EX_TEMPFAIL`) transient/retryable. The
   process exit code equals `errors.Classify(err).ExitCode` and is the same in
@@ -34,8 +37,22 @@ published contract for consumers lives in the root `AGENTS.md`.
 - **Token discipline on list output.** For commands returning collections,
   support `--fields a,b,c` and project the list with
   `gkio.WriteJSONWithFields(w, payload, "<listKey>", fields)` so agents can trim
-  large responses. Parse the flag value with `gkio.ParseFields`.
-- **Non-interactive in JSON mode.** Never prompt under `--output=json`. If a
+  large responses. Parse the flag value with `gkio.ParseFields`, and validate it
+  with `gkio.CheckFields(warnOut, fields, jsonOutput, sample)`: it refuses a
+  non-empty mask outright when `jsonOutput` is false (text mode never consumes
+  the mask, matching each command's own "requires --json" help text),
+  and otherwise warns on stderr about names `sample`'s JSON tags don't have —
+  or, if every requested name is unknown, refuses with `invalid_request`
+  (naming both the rejected and the valid fields) rather than succeeding with
+  a list of empty objects. Breaking change: entirely unknown masks that
+  previously exited `0` with parseable JSON now exit `1` with empty stdout;
+  scripts must use the exact, case-sensitive field names. Announce this in the
+  release notes. MCP tools follow the same contract via `checkFields`
+  in `internal/mcp/internal/tools/utils.go`, which delegates matching to
+  `gkio.UnknownFields` and returns `mcp.NewToolResultError` on the all-unknown
+  case instead of a stderr warning (MCP tools have no text/JSON distinction to
+  gate on).
+- **Non-interactive in JSON mode.** Never prompt under `--json`. If a
   required input is missing, fail with a clear expected error and a hint; do not
   block on stdin.
 - **Mutations support `--dry-run`.** A command that changes state should accept
@@ -51,7 +68,7 @@ published contract for consumers lives in the root `AGENTS.md`.
   CI otherwise.
 
 Human DX and agent DX are orthogonal: keep the interactive, colored path for
-humans and the machine path under `--output=json`.
+humans and the machine path under `--json`.
 
 ### Further reading
 

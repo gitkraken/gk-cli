@@ -16,7 +16,7 @@ matter: the PLAN (JSON describing the proposed commits) and the UNDO ID
 WORKFLOW (use this whenever a human is reviewing)
 
   1. gk ai compose plan --workdir /path/to/repo --plan-file /tmp/plan.json
-     Read-only. Nothing in the repository changes. Do not add --output json
+     Read-only. Nothing in the repository changes. Do not add --json
      here: /tmp/plan.json already holds that JSON, and asking for both is
      rejected. A session-wide GK_OUTPUT=json does not conflict — the plan is
      written to the file and printed on stdout.
@@ -24,7 +24,7 @@ WORKFLOW (use this whenever a human is reviewing)
      commit with its subject, how many files it touches, and its +added and
      -removed line counts. Do not paste the raw JSON at them.
   3. Not what they wanted? Re-run step 1 with --direction or --instructions.
-  4. gk ai compose apply-plan /tmp/plan.json --workdir /path/to/repo --output json
+  4. gk ai compose apply-plan /tmp/plan.json --workdir /path/to/repo --json
      Applies exactly the plan that was reviewed. Spends no AI tokens.
   5. Record undoId from the output and tell the user how to reverse it:
      gk ai compose undo <undo-id>
@@ -98,7 +98,7 @@ CHANGE SELECTION
                          Brace {a,b} and bracket [abc] groups are NOT supported.
 
   On plan, filters are preview-only: they cannot be combined with --plan-file
-  or replayed through apply-plan. Use --output json when you need the complete
+  or replayed through apply-plan. Use --json when you need the complete
   filtered plan. To apply the same selection, run apply with the same filters;
   apply performs fresh AI analysis, so its grouping may differ.
 
@@ -144,6 +144,22 @@ PLANNING CONTROLS
       With --target auto, biases toward fewer or more stacked sub-branches
       inside each planned branch.
 
+MODEL SELECTION
+
+  --model <id> selects a model for this invocation only; it does not change
+  saved provider settings. Without it, Compose uses the active provider's
+  configured model, or the GitKraken backend default when no override is set.
+
+  Run "gk ai provider show" to inspect the active provider and configured
+  model. For GitKraken-hosted AI, "gk ai models" lists available ids and marks
+  the backend default with *. With the GitKraken provider, --model "" bypasses
+  a saved global override once and uses the backend default.
+
+  plan, apply, split plan and split accept --model because they call AI.
+  apply-plan and undo make no AI request and do not accept it. A later split
+  re-runs AI, so repeat the same --model used for split plan when consistency
+  matters.
+
 COST AND PROVIDER
 
   Compose uses GitKraken AI by default and consumes your GitKraken AI tokens.
@@ -156,7 +172,7 @@ COST AND PROVIDER
 
 JSON OUTPUT
 
-  Add --output json to any sub-command. The top-level keys you will use —
+  Add --json to any sub-command. The top-level keys you will use —
   results also carry diagnostic fields (token usage, per-phase timings) not
   listed here:
 
@@ -209,8 +225,8 @@ WHEN IT FAILS
   a detached HEAD
       split needs an explicit --branch.
   --plan-file rejected
-      It cannot be combined with an explicit --output json, --include or
-      --exclude. Drop the flag you don't need, or pass --output text.
+      It cannot be combined with an explicit --json, --include or
+      --exclude. Drop the flag you don't need, or pass --json=false.
   a range compose refusing to exclude the staged layer
       "--range-include-workdir unstaged" leaves staged changes out, but
       unstaged changes are diffed against the index and presuppose them.
@@ -229,10 +245,11 @@ gk ai compose [flags]
   gk ai compose apply-plan /tmp/plan.json               # apply the reviewed plan
   gk ai compose undo --list                             # find a previous run
   gk ai compose undo <undo-id>                          # reverse it
-  gk ai compose plan --output json                      # plan straight to stdout
+  gk ai compose plan --json                      # plan straight to stdout
   gk ai compose plan --direction area                   # group by subsystem
+  gk ai compose plan --model <model-id>                 # one-call model override
   gk ai compose plan --direction custom --instructions "keep the API rename separate"
-  gk ai compose plan --include 'src/**/*.ts' --exclude '**/*.test.ts' --output json
+  gk ai compose plan --include 'src/**/*.ts' --exclude '**/*.test.ts' --json
   gk ai compose apply                                   # plan and apply, no review
   gk ai compose split plan --branch feature/auth --base-branch main
   gk ai compose split --branch feature/auth --base-branch main
@@ -249,8 +266,8 @@ gk ai compose [flags]
 ### Options inherited from parent commands
 
 ```
+      --json             Emit machine-readable JSON on stdout (GK_OUTPUT=json sets it session-wide)
       --no-telemetry     Disable telemetry (OTel spans, Sentry) for this invocation
-      --output string    Output format: text or json (default "text")
       --session string   (Optional) Isolate auth and cache under a named session
 ```
 
@@ -263,4 +280,4 @@ gk ai compose [flags]
 * [gk ai compose split](gk_ai_compose_split.md)	 - Split a multi-commit branch into stacked branches
 * [gk ai compose undo](gk_ai_compose_undo.md)	 - Undo a previous compose operation
 
-###### Auto generated by spf13/cobra on 31-Aug-2026
+###### Auto generated by spf13/cobra on 16-Sep-2026
