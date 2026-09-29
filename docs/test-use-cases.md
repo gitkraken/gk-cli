@@ -454,6 +454,39 @@ selection for install, plus `ai skill uninstall`: it is idempotent when selected
 skills are absent, refuses changed `SKILL.md` files unless `--force` is passed,
 and exposes partial mutation state in the JSON error envelope's `details`
 field; a follow-up JSON `ai skill list` can verify the resulting installed set.
+Also cover the manifest-backed `missing`, `current`, `older_release`, and
+`modified` states; `ai skill check` must be read-only, while `ai skill update`
+only updates present owned skills from the running binary and says so plainly
+when there is nothing installed to update. Exercise project scope from a nested
+worktree directory and verify copied project metadata does not retain an
+absolute path, carries no per-machine gk version or timestamps, and is
+byte-identical for two developers on different gk releases. Every scope that
+can be installed into must also be uninstallable: run an
+`install --scope project` / `uninstall --scope project` round trip and confirm
+it leaves the global install untouched. A linked skill directory or `SKILL.md`
+must be refused identically by install, update and uninstall in both scopes,
+with a message that names the link rather than offering `--force`, and the text
+and `--json` listings must report the same installed set. A client whose skill
+directory cannot be resolved (for example a bad `PI_CODING_AGENT_DIR`) must
+still appear in both listings with an `unavailable` reason while the other
+clients list normally, whereas `check`, `install`, `update` and `uninstall`,
+which name one client, must still fail.
+Multi-client targeting needs its own cases: naming several clients reports a
+per-client result in `--json` under `clients` while a single client keeps
+emitting the bare result object, argument order and repetition must not change
+the outcome, one rejected client must not stop the others (exit non-zero with
+every client still attempted), and `--all` must expand to exactly the detected
+clients and error when none are detected. `--all` means a different set per
+command and each needs a case: install expands to detected clients and is
+rejected under `--scope project`, update and uninstall expand to the clients
+that currently have skills installed (including one whose tool is no longer
+detected), and check expands to both. An unknown `--skill` must be reported
+once for the whole invocation rather than once per client. A directory that
+redirects elsewhere must be refused by install, update and uninstall alike --
+on Windows that means a junction, which Go reports as an irregular file rather
+than as a symbolic link. A directory that merely carries a reparse point and
+redirects nowhere -- a OneDrive placeholder, a ProjFS enlistment -- must still
+be written to normally.
 Dry-run needs two cases, because it validates rather than only previewing: over
 a clean or matching target it reports exact targets/actions, creates no
 directories or files, and exits 0; over a modified target it exits non-zero

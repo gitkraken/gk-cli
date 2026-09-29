@@ -89,13 +89,13 @@ and `duration_ms` must be non-negative integers; `outcome` must be `success` or
 > **`error_code` granularity, current state.** Transport failures keep their
 > structured JSON-RPC code, so they surface granular codes (`jsonrpc_neg_32000`,
 > `jsonrpc_neg_32001`). Application-level git failures (a rejected push, a merge
-> conflict, etc.) do **not**: the server returns them as a `CLIError` whose
-> structured code is dropped at the tool boundary (`cliErrorMiddleware` re-wraps
-> it as a plain message), so the client has no `.code` to normalize and
-> `error_code` collapses to the generic `error`. `executeAppToolBoxAction`
-> already preserves an `error_code`/`code` field if the response payload carries
-> one, so the day the backend propagates a structured code on these failures the
-> granular value flows through automatically — no client change needed.
+> conflict, etc.) do **not**: `toolFailureMiddleware` turns them into an
+> `isError` tool result carrying plain text, so there is no JSON-RPC code and no
+> payload field to normalize, and `error_code` collapses to the generic `error`.
+> `executeAppToolBoxAction` already preserves an `error_code`/`code` field if the
+> response payload carries one, so making these failures granular means having
+> the middleware emit the JSON envelope instead of plain text — a server change,
+> not a client one.
 
 If an interaction name has **no schema entry**, `buildTelemetryData` returns `{}`
 — the explicit client call still attempts to send, but the server may still
