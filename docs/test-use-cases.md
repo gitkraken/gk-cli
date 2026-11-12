@@ -392,11 +392,11 @@ git behavior itself does not need exhaustive re-testing.
 **AI requests:** 0
 
 Using disposable/test credentials, cover provider list, add, set, primary,
-remove, organizations, projects, repositories, and `repo resolve`. Use one git
+remove, organizations, projects, and repositories. Use one git
 provider and one issue-only provider live; cover the remaining provider names
 through command-validation or mocked API tests.
 
-Assert multiple-account selection and remote-to-canonical-repository mapping.
+Assert multiple-account selection.
 Never print or persist tokens in test output.
 
 ### G4. AI provider lifecycle

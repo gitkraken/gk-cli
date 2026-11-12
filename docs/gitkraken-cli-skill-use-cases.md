@@ -11,7 +11,7 @@ for flags and current behavior.
 | --- | --- |
 | Organize multiple logical changes or rewrite commit structure | `gitkraken-commit-composer` |
 | Repair conflicted files in an active git operation | `gitkraken-resolve` |
-| Use ordinary git or another GitKraken CLI feature | `gitkraken-cli` |
+| Use a GitKraken CLI platform feature | `gitkraken-cli` |
 
 ## `gitkraken-commit-composer`
 
@@ -146,90 +146,82 @@ performing another operation.
 
 ## `gitkraken-cli`
 
-Use this skill for ordinary git and all GitKraken CLI platform workflows that
-do not require the dedicated composer or resolve contracts.
+Use this skill for GitKraken CLI platform workflows that do not require the
+dedicated composer or resolve contracts.
 
-### Everyday git and diagnostics
+### Installation and diagnostics
 
-1. Use `gk` as a drop-in replacement for status, log, diff, add, commit,
-   branch, merge, rebase, and other git commands.
-2. Diagnose a mistyped `gk` command that falls through to git.
-3. View the commit graph in the terminal.
-4. Open the graph in GitKraken Desktop or GitLens.
-5. Install the GitKraken CLI through npm.
-6. Inspect system configuration with `gk setup`.
-7. Diagnose installation, shell, authentication, or provider problems.
-8. Read live help before selecting flags.
-9. Configure Claude permission rules for repeated `gk` invocations.
+1. Use `git` directly for status, log, diff, add, commit, branch, merge,
+   rebase, and other ordinary git commands; the `gk <git command>` passthrough
+   is removed in the TypeScript-based `gk`.
+2. Diagnose a mistyped `gk` command from its error message; older releases may
+   hand it to git.
+3. Install the GitKraken CLI through npm.
+4. Inspect system configuration with `gk setup`.
+5. Diagnose installation, shell, authentication, or provider problems.
+6. Read live help before selecting flags.
+7. Configure Claude permission rules for repeated `gk` invocations.
 
 ### Authentication and sessions
 
-10. Log in through the browser or non-interactively with a token.
-11. Log out.
-12. Identify the current user, organization, and connected providers.
-13. Isolate auth and cache in a named test session.
-14. Test configuration without disturbing the primary login.
+8. Log in through the browser or non-interactively with a token.
+9. Log out.
+10. Identify the current user, organization, and connected providers.
+11. Isolate auth and cache in a named test session.
+12. Test configuration without disturbing the primary login.
 
 ### Git and issue providers
 
-15. List, add, update, remove, or choose provider connections.
-16. Connect GitHub, GitHub Enterprise, GitLab, Bitbucket, Azure, Jira,
+13. List, add, update, remove, or choose provider connections.
+14. Connect GitHub, GitHub Enterprise, GitLab, Bitbucket, Azure, Jira,
     Linear, or Trello.
-17. Select default and primary providers when several accounts exist.
-18. Discover organizations, projects, and repositories visible to a token.
-19. Resolve a remote URL to its canonical provider repository.
-20. Diagnose why a checkout is using the wrong connection.
+15. Select default and primary providers when several accounts exist.
+16. Discover organizations, projects, and repositories visible to a token.
 
 ### AI providers and lightweight AI tasks
 
-21. Inspect the active AI provider and available configurations.
-22. Configure OpenAI, Anthropic, OpenRouter, or Ollama.
-23. Use a custom provider base URL or local model.
-24. Change models, switch providers, or remove provider configuration.
-25. Switch back to GitKraken-hosted AI.
-26. Inspect hosted-model options and token balance.
-27. Diagnose resolve incompatibility with a model lacking tool calling.
-28. Generate a message or description for one cohesive staged commit.
-29. Explain a commit or branch.
-30. Generate a changelog between commits or branches.
-31. Generate a pull-request title and description.
+17. Inspect the active AI provider and available configurations.
+18. Configure OpenAI, Anthropic, OpenRouter, or Ollama.
+19. Use a custom provider base URL or local model.
+20. Change models, switch providers, or remove provider configuration.
+21. Switch back to GitKraken-hosted AI.
+22. Inspect hosted-model options and token balance.
+23. Diagnose resolve incompatibility with a model lacking tool calling.
+24. Generate a message or description for one cohesive staged commit.
+25. Explain a commit or branch.
+26. Generate a changelog between commits or branches.
+27. Generate a pull-request title and description.
 
 ### MCP and agent integrations
 
-32. Start the MCP server normally or in read-only mode.
-33. List MCP tools and their parameters.
-34. Print MCP configuration for manual client setup.
-35. Discover, install, or uninstall supported MCP client integrations.
-36. Install integrations for selected, all, or CLI-only clients.
-37. Diagnose availability of status, graph, PR, issue, composer, or resolve tools.
-38. Detect supported coding agents and hook installation status.
-39. List which agents have the bundled GitKraken skills installed, and install
+28. Start the MCP server normally or in read-only mode.
+29. List MCP tools and their parameters.
+30. Print MCP configuration for manual client setup.
+31. Discover, install, or uninstall supported MCP client integrations.
+32. Install integrations for selected, all, or CLI-only clients.
+33. Diagnose availability of status, graph, PR, issue, composer, or resolve tools.
+34. Detect supported coding agents and hook installation status.
+35. List which agents have the bundled GitKraken skills installed, and install
     them for a supported agent.
-40. Preview exact skill install paths and actions without writing. The preview
+36. Preview exact skill install paths and actions without writing. The preview
     reports the same refusal as the install when a skill exists with different
     contents, so it fails until `--force` is explicitly requested.
-41. Install or uninstall GitKraken hooks for supported agents.
-42. List, inspect, archive, or remove captured agent sessions.
+37. Install or uninstall GitKraken hooks for supported agents.
+38. List, inspect, archive, or remove captured agent sessions.
 
-### Work, PRs, issues, and workspaces
+### PRs and issues
 
-43. Answer "what am I working on?"
-44. Start, select, inspect, expand, or end a work item.
-45. Associate branches across several repositories with one task.
-46. Commit, push, or create PRs across an active multi-repository work item.
-47. List PRs or issues assigned to the current user.
-48. Show an issue and assign it to a user.
-49. List, inspect, create, clone, update, refresh, select, or unset a workspace.
-50. Delete a workspace only after explicit confirmation.
+39. List PRs or issues assigned to the current user.
+40. Show an issue and assign it to a user.
 
 ### Automation and scripting
 
-51. Request stable JSON rather than parsing human text.
-52. Use session-wide JSON output through `GK_OUTPUT`.
-53. Keep machine-readable stdout separate from warnings and progress on stderr.
-54. Handle permanent and retryable failures from the JSON error contract.
-55. Select list fields to reduce output and token usage.
-56. Disable telemetry for an invocation or environment.
+41. Request stable JSON rather than parsing human text.
+42. Use session-wide JSON output through `GK_OUTPUT`.
+43. Keep machine-readable stdout separate from warnings and progress on stderr.
+44. Handle permanent and retryable failures from the JSON error contract.
+45. Select list fields to reduce output and token usage.
+46. Disable telemetry for an invocation or environment.
 
 ## Cross-skill boundaries
 

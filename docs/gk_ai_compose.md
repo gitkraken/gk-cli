@@ -5,13 +5,22 @@ Plan and create clean, atomic commits from your working tree changes using AI
 ### Synopsis
 
 
-Plan and create clean, atomic commits from your working tree changes using AI.
+Turn working-tree changes into clean, atomic commits — planned by AI or by you (the calling agent).
 
 Compose reads your changes at the hunk level — a single file's edits can be
 split across several commits — asks AI to group them into a sequence of atomic
 commits, and can then apply that grouping as real commits. Two artifacts
 matter: the PLAN (JSON describing the proposed commits) and the UNDO ID
 (returned by every mutating operation, and the way back).
+
+WHICH WORKFLOW?
+
+  - You (the agent) wrote or understand the changes: prefer the agent-authored
+    flow (collect -> commit). You know the intent, it is deterministic, and it
+    spends no AI credits.
+  - You want AI to propose the grouping (e.g. a large unfamiliar change set),
+    or the source is a branch or range: use plan / apply-plan. The agent flow
+    covers working-tree changes onto HEAD only.
 
 WORKFLOW (use this whenever a human is reviewing)
 
@@ -32,14 +41,48 @@ WORKFLOW (use this whenever a human is reviewing)
 Never run "gk ai compose apply" when the user asked to see what compose would
 do. apply re-plans and applies in one step, so nothing is ever reviewed.
 
+AGENT-AUTHORED WORKFLOW (no AI model, no AI credits)
+
+  When you, the calling agent, will write the commit plan yourself:
+
+  1. gk ai compose collect --json --workdir /path/to/repo
+     Read-only. Returns based_on (a token bound to these exact changes), the
+     changed hunks grouped by file with their indices, and authoring
+     instructions.
+  2. Only for changes you did not write: gk ai compose read --based-on <token>
+     --hunks 0,1 (or --file path) --workdir /path/to/repo shows the patch
+     bodies.
+  3. Show the user the commit plan you drafted, unless they already asked for
+     these commits.
+  4. gk ai compose commit --based-on <token> --input-json - --workdir /path/to/repo
+     (plan on stdin)
+     with {"commits":[{"message":"...","hunkIndices":[0,1],"explanation":"..."}]}.
+     message is the full commit message (subject, then a blank line and an
+     optional body; use \n in JSON). explanation is an optional note about the
+     grouping and is NOT written to the commit. Every collected hunk must be in exactly one commit; commits are created in
+     the order given. Add --dry-run to validate the plan and see the layout
+     without committing. If the files changed since collect, it fails with
+     details.reason "stale_collection" and changes nothing: re-run collect.
+  5. Record undo_id and tell the user how to reverse it:
+     gk ai compose undo <undo-id> --workdir /path/to/repo
+
+  This "commit" applies a plan YOU wrote. It is not "gk ai commit" (one
+  AI-generated message for one commit) and not "gk ai compose apply" (AI plans and
+  applies). Failures use the usual error envelope: error.code is
+  invalid_request and error.details.reason is the specific cause
+  (stale_collection, invalid_plan, signing_failed, timed_out).
+
 SUB-COMMANDS
 
   plan               Generate a commit plan.                Mutates repo: no
   apply              Plan and apply in one step.            Mutates repo: YES
   apply-plan <file>  Apply a previously-saved plan.         Mutates repo: YES
+  collect            Index changed hunks, get a token.      Mutates repo: no
+  read               Show patch bodies of collected hunks.  Mutates repo: no
+  commit             Apply a plan you authored (no AI).     Mutates repo: YES
   split plan         Preview a branch split.                Mutates repo: no
   split              Split a branch into stacked branches.  Mutates repo: YES
-  undo <undo-id>     Reverse a previous apply or split.     Mutates repo: YES
+  undo <undo-id>     Reverse a previous apply, commit or split.  Mutates repo: YES
   undo --list        List undo ids in this repository.      Mutates repo: no
   undo --check <id>  Report whether undo can run safely.    Mutates repo: no
 
@@ -181,9 +224,20 @@ JSON OUTPUT
                         partitionGroups?, stashConflict?, stashNotRestored?}
     split plan         {plan, partitions, source}
     split              {partitions, undoId?}
+    collect            {based_on, files[{path, hunks[{index, header, additions,
+                        deletions}], binary, renamed_from?}], instructions,
+                        diff_stats, hunks_filtered_count, next}
+    read               {hunks[{index, file, header, content, binary}],
+                        truncated, omitted_indices}
+    commit             {commits[{id, sha, subject}], undo_id, signed, undo_hint,
+                        warnings?}
+    commit --dry-run   {dry_run, commits[{id, message, hunkIndices, files}]}
     undo --check       {safe, blockers, warnings}
     undo --list        ["<undo-id>", ...]
 
+  collect, read and commit mostly use snake_case keys, unlike the AI commands
+  above; hunkIndices keeps the casing of the --input-json plan. Copy key names
+  exactly as listed.
   split omits undoId when the analysis produced a single partition: there was
   nothing to split and the branch was left alone. apply reports stashConflict
   or stashNotRestored when the commits landed but the pre-apply safety stash
@@ -282,8 +336,11 @@ gk ai compose [flags]
 * [gk ai](gk_ai.md)	 - Use AI in the CLI
 * [gk ai compose apply](gk_ai_compose_apply.md)	 - Plan and apply commits
 * [gk ai compose apply-plan](gk_ai_compose_apply-plan.md)	 - Apply a previously-saved plan JSON
+* [gk ai compose collect](gk_ai_compose_collect.md)	 - Index changed hunks for an agent-authored commit plan (no AI)
+* [gk ai compose commit](gk_ai_compose_commit.md)	 - Create commits from a plan you authored over collected hunks (no AI)
 * [gk ai compose plan](gk_ai_compose_plan.md)	 - Generate a compose plan without applying it
+* [gk ai compose read](gk_ai_compose_read.md)	 - Show the patch bodies of collected hunks (no AI)
 * [gk ai compose split](gk_ai_compose_split.md)	 - Split a multi-commit branch into stacked branches
 * [gk ai compose undo](gk_ai_compose_undo.md)	 - Undo a previous compose operation
 
-###### Auto generated by spf13/cobra on 28-Oct-2026
+###### Auto generated by spf13/cobra on 12-Nov-2026

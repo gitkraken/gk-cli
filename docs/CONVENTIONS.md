@@ -24,8 +24,10 @@ published contract for consumers lives in the root `AGENTS.md`.
   `{"error":{code,message,retryable,details?}}` envelope on stderr by
   `cmd/main.go`; stdout stays empty. Subprocess passthroughs are exempt: the
   child owns both streams, so no envelope is emitted — see the exit-codes
-  bullet. `details` may carry a rejected preview or
-  partial outcome when callers need machine-readable recovery context. Return
+  bullet. (Passthroughs are deprecated; removed in the TypeScript-based `gk` —
+  see [removed-commands.md](removed-commands.md).) `details` may carry a
+  rejected preview or partial outcome when callers need machine-readable
+  recovery context. Return
   typed CLIErrors (`errors.NewExpectedError` / `NewUnexpectedError`, or the
   network/auth helpers) so the code and retryable flag map correctly. Do not
   print error prose yourself in JSON mode.
@@ -36,7 +38,9 @@ published contract for consumers lives in the root `AGENTS.md`.
   On subprocess passthroughs (`gk merge-mate`, a bare `gk <git command>`), when
   the child ran and exited non-zero gk exits with the child's code verbatim and
   emits no message or error envelope of its own, so the code carries the child's
-  meaning — including a child code that happens to be `1` or `75`.
+  meaning — including a child code that happens to be `1` or `75`. (These
+  passthroughs are deprecated; removed in the TypeScript-based `gk` — see
+  [removed-commands.md](removed-commands.md).)
   Breaking change: network/timeout failures that previously exited `1` now exit
   `75` in both text and JSON mode. Scripts or wrappers checking `$? == 1` must be
   updated; announce this in the release notes.
